@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 - 积分系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            width: 375px;
+            height: 667px;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 0 30px;
+            text-align: center;
+            position: relative;
+        }
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .name {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 4px;
+        }
+        .role {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .menu-item:active {
+            background: #f8f9ff;
+        }
+        .icon {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .text {
+            flex: 1;
+        }
+        .title {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        .desc {
+            font-size: 13px;
+            color: #666;
+        }
+        .arrow {
+            color: #ccc;
+            font-size: 18px;
+        }
+        .logout {
+            text-align: center;
+            padding: 25px 0;
+        }
+        .btn {
+            width: 85%;
+            padding: 14px 0;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        .btn-logout {
+            background: #fff0f0;
+            color: #f44336;
+        }
+        .btn-logout:active {
+            background: #fae6e6;
+        }
+        .design-notes {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            width: 280px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 13px;
+            line-height: 1.5;
+            color: #666;
+        }
+        .design-notes h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        @media (max-width: 768px) {
+            .design-notes { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部头像区 -->
+        <div class="header">
+            <div class="avatar">👦</div>
+            <div class="name">小明同学</div>
+            <div class="role">学生</div>
+        </div>
+
+        <!-- 功能菜单 -->
+        <div class="content">
+            <div class="menu-item" onclick="openPage('profile')">
+                <div class="icon">👤</div>
+                <div class="text">
+                    <div class="title">个人资料</div>
+                    <div class="desc">查看和编辑个人信息</div>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+
+            <div class="menu-item" onclick="openPage('notifications')">
+                <div class="icon">🔔</div>
+                <div class="text">
+                    <div class="title">消息通知</div>
+                    <div class="desc">积分变动和系统通知</div>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+
+            <div class="menu-item" onclick="openPage('privacy')">
+                <div class="icon">🔒</div>
+                <div class="text">
+                    <div class="title">隐私设置</div>
+                    <div class="desc">管理数据权限和隐私</div>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+
+            <div class="menu-item" onclick="openPage('help')">
+                <div class="icon">💡</div>
+                <div class="text">
+                    <div class="title">帮助中心</div>
+                    <div class="desc">常见问题和使用指南</div>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+
+            <div class="logout">
+                <button class="btn btn-logout" onclick="logout()">退出登录</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="design-notes">
+        <h4>🎨 设计说明</h4>
+        <p>• 统一紫色渐变主题，保持品牌一致性</p>
+        <p>• 大头像+圆角卡片，视觉友好</p>
+        <p>• 大按钮设计，便于点击</p>
+        <p>• 精简布局，一屏展示全部功能</p>
+        <p>• 移除身份切换，专注当前用户</p>
+    </div>
+
+    <script>
+        function openPage(page) {
+            alert(`即将打开：${page}`);
+        }
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                alert('已退出登录');
+            }
+        }
+    </script>
+</body>
+</html>
