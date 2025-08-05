@@ -1,16 +1,48 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "拾光计划"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": { "navigationBarTitleText": "拾光计划" }
+    },
+    {
+      "path": "pages/points/points",
+      "style": { "navigationBarTitleText": "积分系统" }
+    },
+    {
+      "path": "pages/logsPage/logs",
+      "style": { "navigationBarTitleText": "日志系统" }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#667eea",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tab-points.png",
+        "selectedIconPath": "static/tab-points-active.png"
+      },
+      {
+        "pagePath": "pages/points/points",
+        "text": "积分",
+        "iconPath": "static/tab-points.png",
+        "selectedIconPath": "static/tab-points-active.png"
+      },
+      {
+        "pagePath": "pages/logsPage/logs",
+        "text": "日志",
+        "iconPath": "static/tab-logs.png",
+        "selectedIconPath": "static/tab-logs-active.png"
+      }
+    ]
+  }
 }

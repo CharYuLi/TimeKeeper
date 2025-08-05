@@ -1,4 +1,3 @@
-<!-- HomePage.vue -->
 <template>
   <view class="page">
     <!-- 全屏轮播 -->
@@ -37,34 +36,12 @@
       <text>+</text>
     </view>
 
-    <!-- 底部导航栏（保留组件） -->
-    <view class="navbar">
-      <view class="nav-item active">
-        <text class="nav-icon">🏠</text>
-        <text>首页</text>
-      </view>
-      <view class="nav-item">
-        <text class="nav-icon">📊</text>
-        <text>积分</text>
-      </view>
-      <view class="nav-item">
-        <text class="nav-icon">📝</text>
-        <text>日志</text>
-      </view>
-      <view class="nav-item">
-        <text class="nav-icon">🛒</text>
-        <text>兑换</text>
-      </view>
-      <view class="nav-item">
-        <text class="nav-icon">👤</text>
-        <text>我的</text>
-      </view>
-    </view>
   </view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+
 
 const bannerList = ref([
   { image: 'https://dummyimage.com/375x617/667eea/fff&text=积分活动1', title: '积分乐园', subtitle: '探索积分的奇妙世界' },
@@ -85,7 +62,27 @@ function onTouchEnd(e) {
 function addPoints() { uni.navigateTo({ url: '/pages/points/add' }); }
 </script>
 
-<style scoped>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+  background: #f5f5f5;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+  background: white;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
 .page {
   height: 100vh;
   background: #f5f5f5;

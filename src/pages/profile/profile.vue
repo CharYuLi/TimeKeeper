@@ -24,13 +24,19 @@
         <button class="btn" @tap="handleLogout">退出登录</button>
       </view>
     </view>
-  </view>
+
+    
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 import { useUserStore } from "@/stores/user";
 
+function go(url) {
+  console.log('Navigating to:', url);
+  uni.switchTab({ url })   // 如果目标页面在 tabBar 里
+  // 或 uni.navigateTo({ url })  如果只是普通页面
+}
 const userStore = useUserStore();
 
 const avatar = ref("👦");
@@ -162,5 +168,49 @@ function handleLogout() {
   border: none;
   border-radius: 50rpx;
   font-size: 32rpx;
+}
+
+
+.floating-btn {
+  position: absolute;
+  bottom: 120rpx;
+  right: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #667eea;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.navbar {
+  height: 100rpx;
+  background: #fff;
+  display: flex;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.nav-item.active {
+  color: #667eea;
+}
+
+.nav-icon {
+  font-size: 40rpx;
+  margin-bottom: 6rpx;
 }
 </style>
