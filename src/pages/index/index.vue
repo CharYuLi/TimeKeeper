@@ -62,48 +62,37 @@ function onTouchEnd(e) {
 function addPoints() { uni.navigateTo({ url: '/pages/points/add' }); }
 </script>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-  background: #f5f5f5;
+<style scoped>
+.page {
+  max-width: 375px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 0;
   overflow-x: hidden;
 }
 
-.container {
-  max-width: 375px;
-  margin: 0 auto;
-  background: white;
-  min-height: 100vh;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.page {
-  height: 100vh;
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-}
-
+/* 全屏轮播区域 */
 .full-banner {
   flex: 1;
   position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
 .swiper {
+  width: 100%;
   height: 100%;
 }
 
 .banner-img {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
+/* 轮播文字 */
 .swiper-content {
   position: absolute;
   inset: 0;
@@ -113,20 +102,21 @@ body {
   align-items: center;
   color: #fff;
   text-align: center;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0,0,0,.15);
 }
 
 .title {
   font-size: 48rpx;
   font-weight: bold;
   margin-bottom: 20rpx;
-  text-shadow: 2rpx 2rpx 6rpx rgba(0, 0, 0, 0.5);
+  text-shadow: 2rpx 2rpx 6rpx rgba(0,0,0,.5);
 }
 
 .subtitle {
   font-size: 32rpx;
 }
 
+/* 指示点 */
 .swiper-dots {
   position: absolute;
   bottom: 40rpx;
@@ -140,13 +130,14 @@ body {
   width: 16rpx;
   height: 16rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255,255,255,.5);
 }
 
 .dot.active {
   background: #fff;
 }
 
+/* 悬浮按钮 */
 .floating-btn {
   position: absolute;
   bottom: 120rpx;
@@ -160,33 +151,7 @@ body {
   justify-content: center;
   font-size: 48rpx;
   color: #667eea;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,.2);
   z-index: 10;
-}
-
-.navbar {
-  height: 100rpx;
-  background: #fff;
-  display: flex;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  color: #666;
-}
-
-.nav-item.active {
-  color: #667eea;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  margin-bottom: 6rpx;
 }
 </style>
