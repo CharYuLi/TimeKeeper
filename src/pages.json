@@ -11,6 +11,10 @@
     {
       "path": "pages/logsPage/logs",
       "style": { "navigationBarTitleText": "日志系统" }
+    },
+    {
+      "path": "pages/profile/profile",
+      "style": { "navigationBarTitleText": "个人信息" }
     }
   ],
   "globalStyle": {
@@ -27,21 +31,27 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "static/tab-points.png",
-        "selectedIconPath": "static/tab-points-active.png"
+        "text": "首页"
+        // "iconPath": "static/tab-points.png",
+        // "selectedIconPath": "static/tab-points-active.png"
       },
       {
         "pagePath": "pages/points/points",
-        "text": "积分",
-        "iconPath": "static/tab-points.png",
-        "selectedIconPath": "static/tab-points-active.png"
+        "text": "积分"
+        // "iconPath": "static/tab-points.png",
+        // "selectedIconPath": "static/tab-points-active.png"
       },
       {
         "pagePath": "pages/logsPage/logs",
-        "text": "日志",
-        "iconPath": "static/tab-logs.png",
-        "selectedIconPath": "static/tab-logs-active.png"
+        "text": "日志"
+        // "iconPath": "static/tab-logs.png",
+        // "selectedIconPath": "static/tab-logs-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+        // "iconPath": "static/tab-profiles.png",
+        // "selectedIconPath": "static/tab-profile-active.png"
       }
     ]
   }

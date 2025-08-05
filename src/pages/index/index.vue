@@ -31,10 +31,10 @@
       </view>
     </view>
 
-    <!-- 悬浮按钮 -->
+    <!-- 悬浮按钮
     <view class="floating-btn" @tap="addPoints">
       <text>+</text>
-    </view>
+    </view> -->
 
   </view>
 </template>
@@ -59,7 +59,6 @@ function onTouchEnd(e) {
     current.value = diff > 0 ? Math.min(2, current.value + 1) : Math.max(0, current.value - 1);
   }
 }
-function addPoints() { uni.navigateTo({ url: '/pages/points/add' }); }
 </script>
 
 <style scoped>

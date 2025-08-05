@@ -24,19 +24,13 @@
         <button class="btn" @tap="handleLogout">退出登录</button>
       </view>
     </view>
-
-    
+  </view>  
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@/stores/user";
+// import { useUserStore } from "@/stores/user";
 
-function go(url) {
-  console.log('Navigating to:', url);
-  uni.switchTab({ url })   // 如果目标页面在 tabBar 里
-  // 或 uni.navigateTo({ url })  如果只是普通页面
-}
 const userStore = useUserStore();
 
 const avatar = ref("👦");
@@ -74,8 +68,13 @@ function handleLogout() {
 
 <style scoped>
 .page {
-  height: 100vh;
-  background: #f5f5f5;
+  max-width: 375px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 0;
+  overflow-x: hidden;
 }
 
 .header {
