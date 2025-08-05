@@ -155,18 +155,6 @@
                 </view>
             </view>
         </view>
-
-        <view class="design-notes">
-            <h3>🎨 学生端优化说明</h3>
-            <p><span class="highlight">统一风格</span>：延续教师端紫色渐变主题，保持品牌一致性</p>
-            <p><span class="highlight">学生视角</span>：仅展示可查看内容，隐藏管理功能</p>
-            <p><span class="highlight">游戏化设计</span>：排行榜、积分动画，提升参与感</p>
-            <p><span class="highlight">操作简化</span>：点击兑换→申请→等待审批，流程清晰</p>
-            <p><span class="highlight">激励提示</span>：空状态鼓励语，激发学生积极性</p>
-            <p><span class="highlight">移动端优化</span>：大按钮、大字体，适合小学生操作</p>
-        </view>
-
-
     </view>
 </template>
 
