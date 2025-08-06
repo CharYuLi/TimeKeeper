@@ -2,19 +2,44 @@
   <view class="page">
     <!-- 顶部头像区 -->
     <view class="header">
-      <view class="avatar">{{ avatar }}</view>
-      <view class="name">{{ name }}</view>
+      <image class="avatar" src="../../static/1.jpg"></image>
+      <view class="name">长期素食</view>
       <view class="role">{{ roleText }}</view>
     </view>
 
     <!-- 功能菜单 -->
     <view class="content">
-      <view v-for="item in menuList" :key="item.key" class="menu-item" hover-class="menu-hover"
-        @tap="handleClick(item.key)">
-        <view class="icon">{{ item.icon }}</view>
+      <view class="menu-item" hover-class="menu-hover" @tap="openPage('profile')">
+        <view class="icon">👤</view>
         <view class="text">
-          <view class="title">{{ item.title }}</view>
-          <view class="desc">{{ item.desc }}</view>
+          <view class="title">个人资料</view>
+          <view class="desc">查看和编辑个人信息</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+      <view class="menu-item" @tap="openPage('notifications')">
+        <view class="icon">🔔</view>
+        <view class="text">
+          <view class="title">消息通知</view>
+          <view class="desc">积分变动和系统通知</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+
+      <view class="menu-item" @tap="openPage('privacy')">
+        <view class="icon">🔒</view>
+        <view class="text">
+          <view class="title">隐私设置</view>
+          <view class="desc">管理数据权限和隐私</view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+
+      <view class="menu-item" @tap="openPage('help')">
+        <view class="icon">💡</view>
+        <view class="text">
+          <view class="title">帮助中心</view>
+          <view class="desc">常见问题和使用指南</view>
         </view>
         <view class="arrow">›</view>
       </view>
@@ -24,14 +49,14 @@
         <button class="btn" @tap="handleLogout">退出登录</button>
       </view>
     </view>
-  </view>  
+  </view>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 // import { useUserStore } from "@/stores/user";
 
-const userStore = useUserStore();
+// const userStore = useUserStore();
 
 const avatar = ref("👦");
 const name = ref("小明同学");
@@ -53,9 +78,13 @@ const menuList = [
   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
 ];
 
-function handleClick(key) {
-  uni.navigateTo({ url: `/pages/${key}/index` });
+function openPage(page) {
+  alert(`即将打开：${page}`);
 }
+
+// function handleClick(key) {
+//   uni.navigateTo({ url: `/pages/${key}/index` });
+// }
 
 function handleLogout() {
   uni.showModal({
@@ -72,7 +101,7 @@ function handleLogout() {
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 0;
   overflow-x: hidden;
 }
