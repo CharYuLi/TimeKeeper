@@ -179,6 +179,7 @@ function goPage(page) { uni.switchTab({ url: `/pages/${page}/index` }); }
   flex: 1;
   padding: 20rpx;
   overflow-y: auto;
+  width: auto !important;
 }
 
 .card {
