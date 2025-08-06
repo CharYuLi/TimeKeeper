@@ -2,22 +2,28 @@
   <view class="page">
     <view class="header">
       <view class="back" @tap="goBack">‹</view>
-      <view class="title">消息设置</view>
+      <view class="title">帮助中心</view>
     </view>
 
-    <view class="item" v-for="(c, key) in config" :key="key">
-      <text>{{ c.label }}</text>
-      <switch :checked="c.value" @change="toggle(key)" />
+    <view v-for="(q, i) in qa" :key="i" class="item" @tap="toggle(i)">
+      <view>
+        <text class="q">{{ q.q }}</text>
+        <text v-show="openIndex === i" class="a">{{ q.a }}</text>
+      </view>
+      <text class="icon">{{ openIndex === i ? '−' : '+' }}</text>
     </view>
   </view>
 </template>
 
 <script setup>
-const config = reactive({
-  points: { label: '积分变动通知', value: true },
-  system: { label: '系统公告', value: false }
-})
-function toggle(key) { config[key].value = !config[key].value }
+import { ref } from 'vue';
+
+const qa = ref([
+  { q: '如何获得积分？', a: '完成作业、参与活动、表现优秀等均可获得积分。' },
+  { q: '积分可以兑换什么？', a: '文具、玩具、奖励卡等丰富奖品。' }
+]);
+const openIndex = ref(-1);
+function toggle(i) { openIndex.value = openIndex.value === i ? -1 : i; }
 function goBack() { uni.navigateBack() }
 </script>
 
@@ -59,5 +65,21 @@ function goBack() { uni.navigateBack() }
   padding: 30rpx;
   border-bottom: 1rpx solid #e5e5e5;
   font-size: 32rpx;
+}
+
+.q {
+  font-weight: bold;
+}
+
+.a {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.icon {
+  font-size: 28rpx;
+  color: #667eea;
 }
 </style>

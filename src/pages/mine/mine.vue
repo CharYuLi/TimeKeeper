@@ -25,16 +25,6 @@
         </view>
         <view class="arrow">›</view>
       </view>
-
-      <view class="menu-item" @tap="openPage('privacy')">
-        <view class="icon">🔒</view>
-        <view class="text">
-          <view class="title">隐私设置</view>
-          <view class="desc">管理数据权限和隐私</view>
-        </view>
-        <view class="arrow">›</view>
-      </view>
-
       <view class="menu-item" @tap="openPage('help')">
         <view class="icon">💡</view>
         <view class="text">
@@ -74,16 +64,13 @@ const roleText = computed(() => {
 const menuList = [
   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
   { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
-  { key: "privacy", icon: "🔒", title: "隐私设置", desc: "管理数据权限和隐私" },
   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
 ];
 
 function openPage(page) {
-  uni.navigateTo({ url: `/pages/mine/profile` });
-  uni.navigateTo({ url: `/pages/mine/notification` });
-  uni.navigateTo({ url: `/pages/mine/privacy` });
-  uni.navigateTo({ url: `/pages/mine/help` });
+  uni.navigateTo({ url: `/pages/mine/${page}/index` });
 }
+
 
 // function handleClick(key) {
 //   uni.navigateTo({ url: `/pages/${key}/index` });

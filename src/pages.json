@@ -12,24 +12,24 @@
       "path": "pages/logsPage/logs",
       "style": { "navigationBarTitleText": "日志系统" }
     },
+     {
+      "path": "pages/activities/activities",
+      "style": { "navigationBarTitleText": "活动报名" }
+    },
     {
       "path": "pages/mine/mine",
       "style": { "navigationBarTitleText": "个人中心" }
     },
     {
-      "path": "pages/mine/profile",
+      "path": "pages/mine/profile/index",
       "style": { "navigationBarTitleText": "个人信息" }
     },
     {
-      "path": "pages/mine/notification",
+      "path": "pages/mine/notification/index",
       "style": { "navigationBarTitleText": "消息通知" }
     },
     {
-      "path": "pages/mine/privacy",
-      "style": { "navigationBarTitleText": "隐私设置" }
-    },
-    {
-      "path": "pages/mine/helpCenter",
+      "path": "pages/mine/help/index",
       "style": { "navigationBarTitleText": "帮助中心" }
     }
   ],

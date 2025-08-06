@@ -2,24 +2,25 @@
   <view class="page">
     <view class="header">
       <view class="back" @tap="goBack">‹</view>
-      <view class="title">隐私设置</view>
+      <view class="title">消息设置</view>
     </view>
 
-    <view v-for="item in list" :key="item.key" class="item" hover-class="hover" @tap="goDetail(item.key)">
-      <text>{{ item.title }}</text>
-      <text class="arrow">›</text>
+    <view class="item" v-for="(c, key) in config" :key="key">
+      <text>{{ c.label }}</text>
+      <switch :checked="c.value" @change="toggle(key)" />
     </view>
   </view>
 </template>
 
 <script setup>
-const list = [
-  { key: 'profile-privacy', title: '个人资料可见性' },
-  { key: 'data-share', title: '数据共享设置' },
-  { key: 'third-party', title: '第三方应用授权' }
-]
+import { reactive } from 'vue'
+
+const config = reactive({
+  points: { label: '积分变动通知', value: true },
+  system: { label: '系统公告', value: false }
+})
+function toggle(key) { config[key].value = !config[key].value }
 function goBack() { uni.navigateBack() }
-function goDetail(key) { uni.navigateTo({ url: `/pages/privacy/${key}` }) }
 </script>
 
 <style scoped>

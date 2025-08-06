@@ -17,6 +17,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 const nickName = ref('小明同学')
 const phone = ref('138****8888')
 function goBack() { uni.navigateBack() }
