@@ -13,8 +13,24 @@
       "style": { "navigationBarTitleText": "日志系统" }
     },
     {
-      "path": "pages/profile/profile",
+      "path": "pages/mine/mine",
+      "style": { "navigationBarTitleText": "个人中心" }
+    },
+    {
+      "path": "pages/mine/profile",
       "style": { "navigationBarTitleText": "个人信息" }
+    },
+    {
+      "path": "pages/mine/notification",
+      "style": { "navigationBarTitleText": "消息通知" }
+    },
+    {
+      "path": "pages/mine/privacy",
+      "style": { "navigationBarTitleText": "隐私设置" }
+    },
+    {
+      "path": "pages/mine/helpCenter",
+      "style": { "navigationBarTitleText": "帮助中心" }
     }
   ],
   "globalStyle": {
@@ -48,10 +64,10 @@
         // "selectedIconPath": "static/tab-logs-active.png"
       },
       {
-        "pagePath": "pages/profile/profile",
+        "pagePath": "pages/mine/mine",
         "text": "我的"
-        // "iconPath": "static/tab-profiles.png",
-        // "selectedIconPath": "static/tab-profile-active.png"
+        // "iconPath": "static/tab-mines.png",
+        // "selectedIconPath": "static/tab-mine-active.png"
       }
     ]
   }

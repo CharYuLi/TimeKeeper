@@ -9,7 +9,7 @@
 
     <!-- 功能菜单 -->
     <view class="content">
-      <view class="menu-item" hover-class="menu-hover" @tap="openPage('profile')">
+      <view class="menu-item" @tap="openPage('profile')">
         <view class="icon">👤</view>
         <view class="text">
           <view class="title">个人资料</view>
@@ -17,7 +17,7 @@
         </view>
         <view class="arrow">›</view>
       </view>
-      <view class="menu-item" @tap="openPage('notifications')">
+      <view class="menu-item" @tap="openPage('notification')">
         <view class="icon">🔔</view>
         <view class="text">
           <view class="title">消息通知</view>
@@ -73,13 +73,16 @@ const roleText = computed(() => {
 
 const menuList = [
   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
-  { key: "notify", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
+  { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
   { key: "privacy", icon: "🔒", title: "隐私设置", desc: "管理数据权限和隐私" },
   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
 ];
 
 function openPage(page) {
-  alert(`即将打开：${page}`);
+  uni.navigateTo({ url: `/pages/mine/profile` });
+  uni.navigateTo({ url: `/pages/mine/notification` });
+  uni.navigateTo({ url: `/pages/mine/privacy` });
+  uni.navigateTo({ url: `/pages/mine/help` });
 }
 
 // function handleClick(key) {
@@ -186,7 +189,7 @@ function handleLogout() {
 .logout {
   margin-top: 60rpx;
   padding: 0 40rpx;
-}
+} 
 
 .btn {
   width: 100%;
