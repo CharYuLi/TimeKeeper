@@ -76,7 +76,7 @@ const renderList = computed(() =>
 /* 事件 */
 function switchTab(key) { activeTab.value = key; }
 function filterList(key) { activeFilter.value = key; }
-function openDetail(id) { uni.navigateTo({ url: `/pages/activity/detail?id=${id}` }); }
+function openDetail(id) { uni.navigateTo({ url: `/pages/activities/actDetails?id=${id}` }); }
 function join(id) { uni.navigateTo({ url: `/pages/activity/detail?id=${id}` }); }
 function share(id) { uni.share({ title: '活动分享', path: `/pages/activity/detail?id=${id}` }); }
 function publish() { uni.navigateTo({ url: '/pages/activity/publish' }); }

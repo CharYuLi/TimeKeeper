@@ -17,6 +17,10 @@
       "style": { "navigationBarTitleText": "活动报名" }
     },
     {
+      "path": "pages/activities/actDetails",
+      "style": { "navigationBarTitleText": "活动详情" }
+    },
+    {
       "path": "pages/mine/mine",
       "style": { "navigationBarTitleText": "个人中心" }
     },
