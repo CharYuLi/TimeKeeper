@@ -13,8 +13,22 @@
       </view>
     </view>
 
+    <!-- 加载状态 -->
+    <view v-if="loading" class="loading">
+      <view class="loading-icon">加载中...</view>
+    </view>
+
+    <!-- 错误提示 -->
+    <view v-if="error" class="error" @tap="fetchData">
+      <view class="error-icon">加载失败，点击重试</view>
+    </view>
+
     <!-- 活动列表 -->
     <scroll-view class="list" scroll-y>
+      <!-- 空状态 -->
+      <view v-if="renderList.length === 0" class="empty">
+        暂无活动数据
+      </view>
       <view v-for="item in renderList" :key="item.id" class="card" @tap="openDetail(item.id)">
         <image :src="item.image" mode="aspectFill" class="card-img" />
         <view class="card-info">
@@ -44,11 +58,6 @@ import { ref, computed } from 'vue';
 
 /* 静态数据（示例） */
 const tabs = [
-  { key: 'all', name: '全部' },
-  { key: 'free', name: '免费' },
-  { key: 'paid', name: '付费' }
-];
-const filters = [
   { key: 'all', name: '全部' },
   { key: 'free', name: '免费' },
   { key: 'paid', name: '付费' }
