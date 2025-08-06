@@ -5,14 +5,6 @@
       <view class="title">活动</view>
     </view>
 
-    <!-- 顶部分类 -->
-    <view class="tab-bar">
-      <view v-for="item in tabs" :key="item.key" class="tab" :class="{ active: activeTab === item.key }"
-        @tap="switchTab(item.key)">
-        {{ item.name }}
-      </view>
-    </view>
-
     <!-- 加载状态 -->
     <view v-if="loading" class="loading">
       <view class="loading-icon">加载中...</view>
@@ -38,16 +30,6 @@
           <view class="card-price">{{ item.price }}</view>
           <view class="card-status">{{ item.status }}</view>
         </view>
-
-        <!-- 按钮栏 -->
-        <view class="btn-row">
-          <button class="btn btn-join" hover-class="hover" @tap.stop="join(item.id)">
-            {{ item.status === '已截止' ? '查看' : '立即预约' }}
-          </button>
-          <button class="btn btn-share" hover-class="hover" @tap.stop="share(item.id)">
-            分享
-          </button>
-        </view>
       </view>
     </scroll-view>
   </view>
@@ -57,12 +39,6 @@
 import { ref, computed } from 'vue';
 
 /* 静态数据（示例） */
-const tabs = [
-  { key: 'all', name: '全部' },
-  { key: 'free', name: '免费' },
-  { key: 'paid', name: '付费' }
-];
-
 const activityList = [
   {
     id: 1,
@@ -129,16 +105,6 @@ function goPage(page) { uni.switchTab({ url: `/pages/${page}/index` }); }
   align-items: center;
 }
 
-.back,
-.btn.hover:active {
-  opacity: 0.8;
-}
-
-.back {
-  font-size: 40rpx;
-  margin-right: 20rpx;
-}
-
 .title {
   flex: 1;
   font-size: 36rpx;
@@ -146,46 +112,26 @@ function goPage(page) { uni.switchTab({ url: `/pages/${page}/index` }); }
   font-weight: bold;
 }
 
-.tab-bar {
-  display: flex;
-  background: #fff;
-  border-bottom: 1rpx solid #e5e5e5;
-}
-
-.tab {
-  flex: 1;
-  padding: 24rpx 0;
-  text-align: center;
-  font-size: 32rpx;
-  position: relative;
-}
-
-.tab.active {
-  color: #667eea;
-}
-
-.tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60rpx;
-  height: 6rpx;
-  background: #667eea;
-}
-
 .list {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 20rpx;
   overflow-y: auto;
   width: auto !important;
 }
 
 .card {
-  border: 1rpx solid #e5e5e5;
-  margin-bottom: 20rpx;
   background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-img {
@@ -219,72 +165,5 @@ function goPage(page) { uni.switchTab({ url: `/pages/${page}/index` }); }
 .card-status {
   font-size: 28rpx;
   color: #f44336;
-}
-
-.btn-row {
-  display: flex;
-  border-top: 1rpx solid #e5e5e5;
-}
-
-.btn {
-  flex: 1;
-  text-align: center;
-  padding: 24rpx 0;
-  font-size: 28rpx;
-  cursor: pointer;
-  border-radius: 0;
-}
-
-.btn-join {
-  background: #667eea;
-  color: #fff;
-}
-
-.btn-share {
-  background: #f5f5f5;
-  color: #333;
-}
-
-.navbar {
-  height: 100rpx;
-  background: #fff;
-  border-top: 1rpx solid #e5e5e5;
-  display: flex;
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  color: #666;
-}
-
-.nav-item.active {
-  color: #667eea;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  margin-bottom: 6rpx;
-}
-
-.floating-btn {
-  position: fixed;
-  bottom: 120rpx;
-  right: 30rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
-  z-index: 10;
 }
 </style>

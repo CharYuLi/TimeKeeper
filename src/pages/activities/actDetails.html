@@ -1,0 +1,260 @@
+<!-- 活动详情页 ActivityDetailPage.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活动详情 - 深业上城会员体验日</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      background: #f5f5f5
+    }
+
+    .container {
+      width: 375px;
+      height: 667px;
+      margin: 0 auto;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    /* 顶部图 */
+    .hero {
+      position: relative;
+      height: 240px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, .3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center
+    }
+
+    .hero-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 8px
+    }
+
+    .hero-sub {
+      font-size: 16px
+    }
+
+    /* header */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: transparent;
+      color: #fff;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      z-index: 10
+    }
+
+    .back {
+      font-size: 24px;
+      cursor: pointer
+    }
+
+    /* 内容区 */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px
+    }
+
+    .info-item {
+      background: #f8f8f8;
+      padding: 15px;
+      border-left: 4px solid #667eea
+    }
+
+    .info-label {
+      font-size: 12px;
+      color: #666
+    }
+
+    .info-value {
+      font-size: 16px;
+      color: #333;
+      font-weight: bold
+    }
+
+    .desc-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #333
+    }
+
+    .desc-text {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6
+    }
+
+    /* 进度条 */
+    .progress {
+      margin: 20px 0
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 5px
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden
+    }
+
+    .progress-fill {
+      background: #667eea;
+      height: 100%;
+      width: 48%
+    }
+
+    /* 底部按钮 */
+    .footer {
+      background: #fff;
+      border-top: 1px solid #e5e5e5;
+      padding: 15px;
+      display: flex;
+      gap: 10px
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 0;
+      text-align: center;
+      font-size: 16px;
+      border-radius: 0;
+      cursor: pointer
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: #fff
+    }
+
+    .btn-share {
+      background: #f5f5f5;
+      color: #333
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- 顶部图 -->
+    <div class="hero">
+      <img src="https://dummyimage.com/375x240/667eea/fff&text=深业上城会员体验日" />
+      <div class="hero-overlay">
+        <div class="hero-title">深业上城会员体验日</div>
+        <div class="hero-sub">免费 · 足球青训体验</div>
+      </div>
+      <div class="header">
+        <view class="back hover" onclick="history.back()">‹</view>
+      </div>
+    </div>
+
+    <!-- 核心信息 -->
+    <scroll-view class="content" scroll-y>
+      <view class="info-grid">
+        <view class="info-item">
+          <view class="info-label">时间</view>
+          <view class="info-value">2025-07-12</view>
+        </view>
+        <view class="info-item">
+          <view class="info-label">费用</view>
+          <view class="info-value">免费</view>
+        </view>
+        <view class="info-item">
+          <view class="info-label">地点</view>
+          <view class="info-value">笔架山体育公园</view>
+        </view>
+        <view class="info-item">
+          <view class="info-label">名额</view>
+          <view class="info-value">50人</view>
+        </view>
+      </view>
+
+      <!-- 进度条 -->
+      <view class="progress">
+        <view class="progress-label">
+          <span>已报名 24/50</span>
+          <span>剩余 26</span>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill"></view>
+        </view>
+      </view>
+
+      <!-- 详情 -->
+      <view class="desc-title">活动详情</view>
+      <view class="desc-text">
+        曼城青训首场深业上城会员专享体验日活动将于7月12日开启。<br>
+        本次活动针对U8&U10、U12、U14多个年龄段，在笔架山体育公园开展，为深业上城会员家庭打造专属足球青训体验。<br><br>
+        • 时间：2025年7月12日<br>
+        • 场地：笔架山体育公园1号足球场<br>
+        • 参与对象：深业上城会员家庭中，年龄符合6-14岁
+      </view>
+    </scroll-view>
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <button class="btn btn-share" hover-class="hover" @tap="share">分享</button>
+      <button class="btn btn-primary" hover-class="hover" :disabled="status !== '报名中'" @tap="book">
+        {{ status === '已截止' ? '已截止' : '立即预约' }}
+      </button>
+    </div>
+  </div>
+  <script setup>
+    const status = ref('已截止'); // 可改为 '报名中'
+
+    function goBack() { uni.navigateBack() }
+    function share() { uni.share({ title: '活动分享', path: '/pages/activity/detail?id=1' }) }
+    function book() { status.value === '报名中' && uni.showToast({ title: '预约成功' }) }
+    function openMap() { uni.openLocation({ latitude: 22.55, longitude: 114.07, name: '笔架山体育公园' }) }
+  </script>
