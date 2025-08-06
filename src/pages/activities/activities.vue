@@ -13,14 +13,6 @@
       </view>
     </view>
 
-    <!-- 筛选栏 -->
-    <view class="filter-bar">
-      <button v-for="btn in filters" :key="btn.key" class="filter-btn" :class="{ active: activeFilter === btn.key }"
-        @tap="filterList(btn.key)">
-        {{ btn.name }}
-      </button>
-    </view>
-
     <!-- 活动列表 -->
     <scroll-view class="list" scroll-y>
       <view v-for="item in renderList" :key="item.id" class="card" @tap="openDetail(item.id)">
@@ -172,26 +164,6 @@ function goPage(page) { uni.switchTab({ url: `/pages/${page}/index` }); }
   width: 60rpx;
   height: 6rpx;
   background: #667eea;
-}
-
-.filter-bar {
-  display: flex;
-  padding: 20rpx;
-  background: #fff;
-}
-
-.filter-btn {
-  padding: 12rpx 24rpx;
-  margin-right: 20rpx;
-  border: 1rpx solid #e5e5e5;
-  font-size: 28rpx;
-  border-radius: 0;
-}
-
-.filter-btn.active {
-  background: #667eea;
-  color: #fff;
-  border-color: #667eea;
 }
 
 .list {

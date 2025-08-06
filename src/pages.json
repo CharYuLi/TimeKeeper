@@ -64,9 +64,15 @@
         // "selectedIconPath": "static/tab-logs-active.png"
       },
       {
+        "pagePath": "pages/activities/activities",
+        "text": "活动"
+        // "iconPath": "static/tab-activities.png",
+        // "selectedIconPath": "static/tab-activities-active.png"
+      },
+      {
         "pagePath": "pages/mine/mine",
         "text": "我的"
-        // "iconPath": "static/tab-mines.png",
+        // "iconPath": "static/tab-mine.png",
         // "selectedIconPath": "static/tab-mine-active.png"
       }
     ]
