@@ -1,165 +1,171 @@
 <template>
   <view class="container">
-        <view class="header">
-            <view class="user-info">
-                <view class="avatar">👦</view>
-                <view>
-                    <h2>小明同学</h2>
-                    <p>三年级二班</p>
-                </view>
-            </view>
-            <view class="points-card">
-                <view class="points-value">328</view>
-                <view>我的积分</view>
-            </view>
-        </view>
-
-        <view class="nav-tabs">
-            <view class="nav-tab" :class="{active: activeTab === 'leaderboard'}" @click="switchTab('leaderboard')">🏆 排行榜</view>
-            <view class="nav-tab" :class="{active: activeTab === 'records'}" @click="switchTab('records')">📋 积分记录</view>
-            <view class="nav-tab" :class="{active: activeTab === 'redeem'}" @click="switchTab('redeem')">🎁 积分兑换</view>
-        </view>
-
-        <view class="content">
-            <view v-show="activeTab === 'leaderboard'" class="tab-content">
-                <view class="leaderboard-item">
-                    <view class="rank gold">1</view>
-                    <view class="student-avatar">👧</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">小红</view>
-                        <view style="font-size: 12px; color: #999;">三年级一班</view>
-                    </view>
-                    <view style="font-size: 20px; font-weight: bold; color: #667eea;">450分</view>
-                </view>
-
-                <view class="leaderboard-item">
-                    <view class="rank silver">2</view>
-                    <view class="student-avatar">👦</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">小明</view>
-                        <view style="font-size: 12px; color: #999;">三年级二班</view>
-                    </view>
-                    <view style="font-size: 20px; font-weight: bold; color: #667eea;">328分</view>
-                </view>
-
-                <view class="leaderboard-item">
-                    <view class="rank bronze">3</view>
-                    <view class="student-avatar">👧</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">小丽</view>
-                        <view style="font-size: 12px; color: #999;">三年级一班</view>
-                    </view>
-                    <view style="font-size: 20px; font-weight: bold; color: #667eea;">310分</view>
-                </view>
-
-                <view class="leaderboard-item">
-                    <view class="rank other">4</view>
-                    <view class="student-avatar">👦</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">小强</view>
-                        <view style="font-size: 12px; color: #999;">三年级二班</view>
-                    </view>
-                    <view style="font-size: 20px; font-weight: bold; color: #667eea;">285分</view>
-                </view>
-            </view>
-
-            <view v-show="activeTab === 'records'" class="tab-content">
-                <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
-                    <view style="display: flex; justify-content: space-between; align-items: center;">
-                        <view>
-                            <view style="font-weight: bold;">完成数学作业</view>
-                            <view style="font-size: 12px; color: #999;">按时完成作业，正确率90%</view>
-                        </view>
-                        <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+10</view>
-                    </view>
-                    <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 14:30</view>
-                </view>
-
-                <view class="record-item" @click="showRecordDetail('帮助同学', '+5', '2025-08-02 10:15')">
-                    <view style="display: flex; justify-content: space-between; align-items: center;">
-                        <view>
-                            <view style="font-weight: bold;">帮助同学</view>
-                            <view style="font-size: 12px; color: #999;">主动帮助同桌解决问题</view>
-                        </view>
-                        <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+5</view>
-                    </view>
-                    <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 10:15</view>
-                </view>
-
-                <view class="record-item" @click="showRecordDetail('兑换文具套装', '-50', '2025-08-01 16:20')">
-                    <view style="display: flex; justify-content: space-between; align-items: center;">
-                        <view>
-                            <view style="font-weight: bold;">兑换文具套装</view>
-                            <view style="font-size: 12px; color: #999;">精美文具套装一套</view>
-                        </view>
-                        <view style="font-size: 18px; font-weight: bold; color: #f44336;">-50</view>
-                    </view>
-                    <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-01 16:20</view>
-                </view>
-            </view>
-
-            <view v-show="activeTab === 'redeem'" class="tab-content">
-                <view class="redeem-item" @click="showRedeemDetail('文具套装', 50)">
-                    <view class="redeem-icon">📝</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">文具套装</view>
-                        <view style="font-size: 14px; color: #666;">包含铅笔、橡皮、尺子等</view>
-                        <view style="font-size: 18px; color: #667eea; margin-top: 5px;">50分</view>
-                    </view>
-                </view>
-
-                <view class="redeem-item" @click="showRedeemDetail('小恐龙玩具', 80)">
-                    <view class="redeem-icon">🦕</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">小恐龙玩具</view>
-                        <view style="font-size: 14px; color: #666;">可动关节的可爱恐龙</view>
-                        <view style="font-size: 18px; color: #667eea; margin-top: 5px;">80分</view>
-                    </view>
-                </view>
-
-                <view class="redeem-item" @click="showRedeemDetail('免作业券', 100)">
-                    <view class="redeem-icon">🎫</view>
-                    <view style="flex: 1;">
-                        <view style="font-weight: bold;">免作业券</view>
-                        <view style="font-size: 14px; color: #666;">可免一次家庭作业</view>
-                        <view style="font-size: 18px; color: #667eea; margin-top: 5px;">100分</view>
-                    </view>
-                </view>
-
-                <view class="empty-state">
-                    <view class="empty-state-icon">🎯</view>
-                    <p>你的积分还不够哦！<br>继续加油获得更多积分！</p>
-                </view>
-            </view>
-        </view>
-
-        <view class="modal" v-show="showDetailModal">
-            <view class="modal-content">
-                <span class="close-btn" @click="closeModal">×</span>
-                <h3>{{ modalTitle }}</h3>
-                <p v-html="modalContent" style="margin: 20px 0;"></p>
-                <button class="btn btn-primary" @click="closeModal" style="width: 100%;">知道了</button>
-            </view>
-        </view>
-
-        <view class="modal" v-show="showRedeemModal">
-            <view class="modal-content">
-                <span class="close-btn" @click="closeModal">×</span>
-                <h3>申请兑换 {{ redeemItem }}</h3>
-                <p style="margin: 20px 0;">确定要用 <span style="color: #667eea; font-weight: bold;">{{ redeemPoints }}</span> 积分兑换 <span
-                        style="font-weight: bold;">{{ redeemItem }}</span> 吗？</p>
-                <view style="display: flex; gap: 10px;">
-                    <button class="btn btn-secondary" style="flex: 1; background: #f0f0f0; color: #666;"
-                        @click="closeModal">取消</button>
-                    <button class="btn btn-primary" style="flex: 1;" @click="submitRedeem">确认申请</button>
-                </view>
-            </view>
+    <view class="header">
+      <view class="user-info">
+        <view class="avatar">👦</view>
+        <view>
+          <h2>小明同学</h2>
+          <p>三年级二班</p>
         </view>
       </view>
+      <view class="points-card">
+        <view class="points-value">328</view>
+        <view>我的积分</view>
+      </view>
+    </view>
+
+    <view class="nav-tabs">
+      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜
+      </view>
+      <view class="nav-tab" :class="{ active: activeTab === 'records' }" @click="switchTab('records')">📋 积分记录</view>
+      <view class="nav-tab" :class="{ active: activeTab === 'redeem' }" @click="switchTab('redeem')">🎁 积分兑换</view>
+    </view>
+
+    <view class="content">
+      <view v-show="activeTab === 'leaderboard'" class="tab-content">
+        <view class="leaderboard-item">
+          <view class="rank gold">1</view>
+          <view class="student-avatar">👧</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小红</view>
+            <view style="font-size: 12px; color: #999;">三年级一班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">450分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank silver">2</view>
+          <view class="student-avatar">👦</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小明</view>
+            <view style="font-size: 12px; color: #999;">三年级二班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">328分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank bronze">3</view>
+          <view class="student-avatar">👧</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小丽</view>
+            <view style="font-size: 12px; color: #999;">三年级一班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">310分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank other">4</view>
+          <view class="student-avatar">👦</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小强</view>
+            <view style="font-size: 12px; color: #999;">三年级二班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">285分</view>
+        </view>
+      </view>
+
+      <view v-show="activeTab === 'records'" class="tab-content">
+        <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
+          <view style="display: flex; justify-content: space-between; align-items: center;">
+            <view>
+              <view style="font-weight: bold;">完成数学作业</view>
+              <view style="font-size: 12px; color: #999;">按时完成作业，正确率90%</view>
+            </view>
+            <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+10</view>
+          </view>
+          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 14:30</view>
+        </view>
+
+        <view class="record-item" @click="showRecordDetail('帮助同学', '+5', '2025-08-02 10:15')">
+          <view style="display: flex; justify-content: space-between; align-items: center;">
+            <view>
+              <view style="font-weight: bold;">帮助同学</view>
+              <view style="font-size: 12px; color: #999;">主动帮助同桌解决问题</view>
+            </view>
+            <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+5</view>
+          </view>
+          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 10:15</view>
+        </view>
+
+        <view class="record-item" @click="showRecordDetail('兑换文具套装', '-50', '2025-08-01 16:20')">
+          <view style="display: flex; justify-content: space-between; align-items: center;">
+            <view>
+              <view style="font-weight: bold;">兑换文具套装</view>
+              <view style="font-size: 12px; color: #999;">精美文具套装一套</view>
+            </view>
+            <view style="font-size: 18px; font-weight: bold; color: #f44336;">-50</view>
+          </view>
+          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-01 16:20</view>
+        </view>
+      </view>
+
+      <view v-show="activeTab === 'redeem'" class="tab-content">
+        <view class="redeem-item" @click="showRedeemDetail('文具套装', 50)">
+          <view class="redeem-icon">📝</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">文具套装</view>
+            <view style="font-size: 14px; color: #666;">包含铅笔、橡皮、尺子等</view>
+            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">50分</view>
+          </view>
+        </view>
+
+        <view class="redeem-item" @click="showRedeemDetail('小恐龙玩具', 80)">
+          <view class="redeem-icon">🦕</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小恐龙玩具</view>
+            <view style="font-size: 14px; color: #666;">可动关节的可爱恐龙</view>
+            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">80分</view>
+          </view>
+        </view>
+
+        <view class="redeem-item" @click="showRedeemDetail('免作业券', 100)">
+          <view class="redeem-icon">🎫</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">免作业券</view>
+            <view style="font-size: 14px; color: #666;">可免一次家庭作业</view>
+            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">100分</view>
+          </view>
+        </view>
+
+        <view class="empty-state">
+          <view class="empty-state-icon">🎯</view>
+          <p>你的积分还不够哦！<br>继续加油获得更多积分！</p>
+        </view>
+      </view>
+    </view>
+
+    <view class="modal" v-show="showDetailModal">
+      <view class="modal-content">
+        <span class="close-btn" @click="closeModal">×</span>
+        <h3>{{ modalTitle }}</h3>
+        <p v-html="modalContent" style="margin: 20px 0;"></p>
+        <button class="btn btn-primary" @click="closeModal" style="width: 100%;">知道了</button>
+      </view>
+    </view>
+
+    <view class="modal" v-show="showRedeemModal">
+      <view class="modal-content">
+        <span class="close-btn" @click="closeModal">×</span>
+        <h3>申请兑换 {{ redeemItem }}</h3>
+        <p style="margin: 20px 0;">确定要用 <span style="color: #667eea; font-weight: bold;">{{ redeemPoints }}</span> 积分兑换
+          <span style="font-weight: bold;">{{ redeemItem }}</span> 吗？</p>
+        <view style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary" style="flex: 1; background: #f0f0f0; color: #666;"
+            @click="closeModal">取消</button>
+          <button class="btn btn-primary" style="flex: 1;" @click="submitRedeem">确认申请</button>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+
+
+
+import { exchangeProduct } from '@/api/points';
+import { gainPointsForchild } from '@/api/points';
 
 
 const activeTab = ref('leaderboard');
@@ -199,6 +205,27 @@ const submitRedeem = () => {
   alert('兑换申请已提交，等待老师审批！');
   closeModal();
 };
+
+// 接口
+const handleExchange = async (productName) => {
+  const response = await exchangeProduct('token', productName);
+  if (response.success) {
+    uni.showToast({ title: response.data, icon: 'success' });
+    // 刷新积分
+    points.value = await loadUserPoints('token');
+  } else {
+    uni.showToast({ title: response.message, icon: 'none' });
+  }
+};
+
+const handleGainPoints = async () => {
+  const response = await gainPointsForchild('token');
+  if (response.success) {
+    uni.showToast({ title: response.message, icon: 'success' });
+  } else {
+    uni.showToast({ title: response.message, icon: 'none' });
+  }
+}
 </script>
 
 <style>
