@@ -2,24 +2,66 @@
   <view class="container">
     <view class="header">
       <view class="user-info">
-        <view class="avatar">👦</view>
+        <view class="avatar">👩‍🏫</view>
         <view>
-          <h2>小明同学</h2>
-          <p>三年级二班</p>
+          <h2>刘老师</h2>
         </view>
       </view>
-      <view class="points-card">
-        <view class="points-value">328</view>
-        <view>我的积分</view>
+      <view class="date-selector">
+        📅 2025年8月2日 星期六
       </view>
     </view>
 
     <view class="nav-tabs">
+      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜
+      </view>
       <view class="nav-tab" :class="{ active: activeTab === 'records' }" @click="switchTab('records')">📋 积分记录</view>
       <view class="nav-tab" :class="{ active: activeTab === 'redeem' }" @click="switchTab('redeem')">🎁 积分兑换</view>
     </view>
 
     <view class="content">
+      <view v-show="activeTab === 'leaderboard'" class="tab-content">
+        <view class="leaderboard-item">
+          <view class="rank gold">1</view>
+          <view class="student-avatar">👧</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小红</view>
+            <view style="font-size: 12px; color: #999;">三年级一班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">450分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank silver">2</view>
+          <view class="student-avatar">👦</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小明</view>
+            <view style="font-size: 12px; color: #999;">三年级二班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">328分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank bronze">3</view>
+          <view class="student-avatar">👧</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小丽</view>
+            <view style="font-size: 12px; color: #999;">三年级一班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">310分</view>
+        </view>
+
+        <view class="leaderboard-item">
+          <view class="rank other">4</view>
+          <view class="student-avatar">👦</view>
+          <view style="flex: 1;">
+            <view style="font-weight: bold;">小强</view>
+            <view style="font-size: 12px; color: #999;">三年级二班</view>
+          </view>
+          <view style="font-size: 20px; font-weight: bold; color: #667eea;">285分</view>
+        </view>
+      </view>
+
       <view v-show="activeTab === 'records'" class="tab-content">
         <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
           <view style="display: flex; justify-content: space-between; align-items: center;">
@@ -85,7 +127,7 @@
 
         <view class="empty-state">
           <view class="empty-state-icon">🎯</view>
-          <p>继续加油获得更多积分！</p>
+          <p>你的积分还不够哦！<br>继续加油获得更多积分！</p>
         </view>
       </view>
     </view>
@@ -174,6 +216,14 @@ const handleExchange = async (productName) => {
   }
 };
 
+// const handleGainPoints = async () => {
+//   const response = await gainPointsForchild('token');
+//   if (response.success) {
+//     uni.showToast({ title: response.message, icon: 'success' });
+//   } else {
+//     uni.showToast({ title: response.message, icon: 'none' });
+//   }
+// }
 </script>
 
 <style>
@@ -255,19 +305,13 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.points-card {
+.date-selector {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 15px 30px;
-  display: inline-block;
+  border-radius: 20px;
+  padding: 10px 20px;
   margin-top: 15px;
-}
-
-.points-value {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  display: inline-block;
 }
 
 .nav-tabs {

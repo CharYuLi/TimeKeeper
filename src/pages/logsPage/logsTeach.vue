@@ -2,9 +2,9 @@
   <view class="container">
     <view class="header">
       <view class="user-info">
-        <view class="avatar">👦</view>
+        <view class="avatar">👩‍🏫</view>
         <view>
-          <h2>小明同学</h2>
+          <h2>刘老师</h2>
         </view>
       </view>
       <view class="date-selector">
@@ -15,7 +15,7 @@
     <view class="nav-tabs">
       <view class="nav-tab" :class="{ active: activeTab === 'performance' }" @click="switchTab('performance')">今日表现</view>
       <view class="nav-tab" :class="{ active: activeTab === 'tasks' }" @click="switchTab('tasks')">作业任务</view>
-      <view class="nav-tab" :class="{ active: activeTab === 'feedback' }" @click="switchTab('feedback')">教师反馈</view>
+      <view class="nav-tab" :class="{ active: activeTab === 'feedback' }" @click="switchTab('feedback')">留言反馈</view>
     </view>
 
     <view class="content">
@@ -51,14 +51,6 @@
             <span>餐后收拾 +2分</span>
           </view>
         </view>
-
-        <view class="performance-card">
-          <h3 style="margin-bottom: 15px; color: #667eea;">📊 今日积分</h3>
-          <view style="text-align: center;">
-            <view style="font-size: 48px; color: #667eea; font-weight: bold;">+15</view>
-            <p style="color: #666;">表现优秀，继续努力！</p>
-          </view>
-        </view>
       </view>
 
       <view v-show="activeTab === 'tasks'" class="tab-content">
@@ -91,14 +83,25 @@
 
       <view v-show="activeTab === 'feedback'" class="tab-content">
         <view class="performance-card">
-          <h3 style="margin-bottom: 15px; color: #667eea;">💬 教师点评</h3>
+          <h3 style="margin-bottom: 15px; color: #667eea;">📋 家长关注点</h3>
           <view style="background: #f8f9ff; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-            <p style="margin-top: 5px;">今天小明表现很棒！数学作业完成质量高，英语朗读声音洪亮。建议加强口算练习，继续加油！</p>
+            <strong>家长留言：</strong>
+            <p style="margin-top: 5px;">六六六六六六六六六六六六六六六六六六六六六六六，希望老师能多关注孩子的口算能力，谢谢！</p>
           </view>
-          <button class="btn btn-primary" style="width: 100%;" @click="showReplyForm">回复</button>
+          <button class="btn btn-primary" style="width: 100%;" @click="showReplyForm">回复家长</button>
+        </view>
+
+        <view class="performance-card">
+          <h3 style="margin-bottom: 15px; color: #667eea;">📋 教师点评</h3>
+          <view style="background: #f8f9ff; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+            <textarea placeholder="请输入回复内容..."></textarea>
+          </view>
+          <button class="btn btn-primary" style="width: 100%;" @click="sendReply">发送</button>
         </view>
       </view>
     </view>
+
+    <view class="fab" @click="showAddLog">+</view>
   </view>
 
   <view class="modal" v-show="showTaskModal" @click.self="closeModal('task')">
@@ -115,7 +118,7 @@
   <view class="modal" v-show="showReplyModal" @click.self="closeModal('reply')">
     <view class="modal-content">
       <span class="close-btn" @click="closeModal('reply')">×</span>
-      <h3>回复教师</h3>
+      <h3>回复家长</h3>
       <view class="form-group">
         <label>回复内容</label>
         <textarea placeholder="请输入回复内容..."></textarea>
@@ -123,6 +126,37 @@
       <view class="btn-group">
         <button class="btn btn-secondary" @click="closeModal('reply')">取消</button>
         <button class="btn btn-primary" @click="sendReply">发送</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal" v-show="showAddLogModal" @click.self="closeModal('addLog')">
+    <view class="modal-content">
+      <span class="close-btn" @click="closeModal('addLog')">×</span>
+      <h3>添加学生日志</h3>
+      <view class="form-group">
+        <label>学生姓名</label>
+        <select>
+          <option>小明</option>
+          <option>小红</option>
+          <option>小丽</option>
+        </select>
+      </view>
+      <view class="form-group">
+        <label>学科表现</label>
+        <select>
+          <option>语文 - 优秀</option>
+          <option>数学 - 良好</option>
+          <option>英语 - 需加强</option>
+        </select>
+      </view>
+      <view class="form-group">
+        <label>教师点评</label>
+        <textarea placeholder="请输入今日点评..."></textarea>
+      </view>
+      <view class="btn-group">
+        <button class="btn btn-secondary" @click="closeModal('addLog')">取消</button>
+        <button class="btn btn-primary" @click="saveLog">保存</button>
       </view>
     </view>
   </view>
@@ -173,7 +207,7 @@ function closeModal(modal) {
 }
 
 function sendReply() {
-  alert('回复已发送给教师！')
+  alert('回复已发送给家长！')
   closeModal('reply')
 }
 

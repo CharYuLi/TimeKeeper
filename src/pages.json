@@ -9,10 +9,18 @@
       "style": { "navigationBarTitleText": "积分系统" }
     },
     {
+      "path": "pages/points/pointsTeach",
+      "style": { "navigationBarTitleText": "教师积分系统" }
+    },
+    {
       "path": "pages/logsPage/logs",
       "style": { "navigationBarTitleText": "日志系统" }
     },
-     {
+    {
+      "path": "pages/logsPage/logsTeach",
+      "style": { "navigationBarTitleText": "教师日志系统" }
+    },
+    {
       "path": "pages/activities/activities",
       "style": { "navigationBarTitleText": "活动报名" }
     },
@@ -56,13 +64,13 @@
         // "selectedIconPath": "static/tab-points-active.png"
       },
       {
-        "pagePath": "pages/points/points",
+        "pagePath": "pages/points/pointsTeach",
         "text": "积分"
         // "iconPath": "static/tab-points.png",
         // "selectedIconPath": "static/tab-points-active.png"
       },
       {
-        "pagePath": "pages/logsPage/logs",
+        "pagePath": "pages/logsPage/logsTeach",
         "text": "日志"
         // "iconPath": "static/tab-logs.png",
         // "selectedIconPath": "static/tab-logs-active.png"
