@@ -143,46 +143,32 @@
     </view>
 
     <!-- 添加学生积分模态框显示按钮 -->
-    <view class="fab" v-show="activeTab === 'points'" @click="showAddLog">+</view>
+    <view class="fab" v-show="activeTab === 'points'" @click="showPointsModal = true">+</view>
     <!-- 添加学生日志模态框显示按钮 -->
     <view class="fab" v-show="activeTab === 'logs'" @click="showAddLog">+</view>
   </view>
 
 
-  <!-- 添加学生积分模态框 -->
-  <view class="modal" v-show="activeTab === 'points' && showAddLogModal" @click.self="closeModal('addLog')">
-    <view class="modal-content">
-      <span class="close-btn" @click="closeModal('addLog')">×</span>
-      <h3>修改学生积分</h3>
-      <view class="form-group">
-        <label>日志描述</label>
-        <textarea placeholder="请输入积分变动原因..."></textarea>
-      </view>
-      <view class="btn-group">
-        <button class="btn btn-secondary" @click="closeModal('addLog')">取消</button>
-        <button class="btn btn-primary" @click="saveLog">保存</button>
-      </view>
-    </view>
-  </view>
+  <!-- 修改学生积分模态框 -->
+  <PointsModal v-model:visible="showPointsModal" @confirm="handleChangePoints" />
   <!-- 添加学生日志模态框 -->
   <view class="modal" v-show="activeTab === 'logs' && showAddLogModal" @click.self="closeModal('addLog')">
     <view class="modal-content">
       <span class="close-btn" @click="closeModal('addLog')">×</span>
-      <h3>添加学生日志</h3>
       <view class="form-group">
-        <label>学生姓名</label>
+        <label>学科</label>
         <select>
-          <option>小明</option>
-          <option>小红</option>
-          <option>小丽</option>
+          <option>语文</option>
+          <option>数学</option>
+          <option>英语</option>
         </select>
       </view>
       <view class="form-group">
-        <label>学科表现</label>
+        <label>表现</label>
         <select>
-          <option>语文 - 优秀</option>
-          <option>数学 - 良好</option>
-          <option>英语 - 需加强</option>
+          <option>优秀</option>
+          <option>良好</option>
+          <option>需加强</option>
         </select>
       </view>
       <view class="form-group">
@@ -200,6 +186,22 @@
 
 <script setup>
 import { ref } from 'vue'
+import PointsModal from '@/components/PointsModal.vue'
+
+const showPointsModal = ref(false)
+function handleChangePoints({ title, desc, points }) {
+  console.log(title, desc, points)
+  showPointsModal.value = false   // ← 关闭弹窗
+}
+// function handleChangePoints({ title, desc, points }) {
+//   // 这里写真正的业务逻辑
+//   console.log('收到积分变动', { title, desc, points })
+//   // 示例：直接往记录数组里加一条
+//   // records.value.unshift({ title, desc, points, time: dayjs().format('YYYY-MM-DD HH:mm') })
+//   // 然后关闭弹窗
+//   showAddLogModal.value = false
+// }
+
 
 const activeTab = ref('points')
 const showDetailModal = ref(false);

@@ -85,17 +85,6 @@ const activeTab = ref('leaderboard');
 const studentIdx = ref(0);
 
 /* 静态数据 */
-const tabs = [
-  { key: 'rank', name: '排行榜' },
-  { key: 'students', name: '学生列表' },
-];
-
-const rankList = [
-  { id: 1, name: '小红', points: 450 },
-  { id: 2, name: '小明', points: 428 },
-  { id: 3, name: '小丽', points: 310 }
-];
-
 const studentList = [
   { id: 1, name: '小明' },
   { id: 2, name: '小红' }
