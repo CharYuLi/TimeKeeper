@@ -44,8 +44,8 @@ import { ref } from 'vue';
 
 
 const bannerList = ref([
-  { image: 'https://dummyimage.com/375x617/667eea/fff&text=积分活动1', title: '积分乐园', subtitle: '探索积分的奇妙世界' },
-  { image: 'https://dummyimage.com/375x617/764ba2/fff&text=积分活动2', title: '成长积分榜', subtitle: '记录每一步成长' },
+  { image: 'https://dummyimage.com/375x617/667eea/fff&text=积分活动1', title: '小活动', subtitle: '探索奇妙世界' },
+  { image: 'https://dummyimage.com/375x617/764ba2/fff&text=积分活动2', title: '啦啦啦', subtitle: '记录每一步成长' },
   { image: 'https://dummyimage.com/375x617/8e8e8e/fff&text=积分活动3', title: '精彩瞬间', subtitle: '留住美好的每一刻' },
 ]);
 

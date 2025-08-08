@@ -188,7 +188,6 @@ function handleLogout() {
   font-size: 32rpx;
 }
 
-
 .floating-btn {
   position: absolute;
   bottom: 120rpx;
@@ -206,29 +205,4 @@ function handleLogout() {
   z-index: 10;
 }
 
-.navbar {
-  height: 100rpx;
-  background: #fff;
-  display: flex;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  color: #666;
-}
-
-.nav-item.active {
-  color: #667eea;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  margin-bottom: 6rpx;
-}
 </style>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="divport" content="width=device-width, initial-scale=1.0">
+  <title>管理 - 积分系统</title>
+  <style>
+    .page {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      background: #f5f5f5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      background: #f5f5f5;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 375px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      33% {
+        transform: translate(30px, -30px) rotate(120deg);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .date-selector {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-top: 15px;
+      display: inline-block;
+    }
+
+    .nav-tabs {
+      display: flex;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-tab {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #999;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-tab.active {
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 3px;
+      background: #667eea;
+      border-radius: 2px;
+    }
+
+    .content {
+      padding: 20px;
+      min-height: 500px;
+    }
+
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.3s;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: white;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .leaderboard-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .rank {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 18px;
+    }
+
+    .rank.gold {
+      background: #FFD700;
+      color: white;
+    }
+
+    .rank.silver {
+      background: #C0C0C0;
+      color: white;
+    }
+
+    .rank.bronze {
+      background: #CD7F32;
+      color: white;
+    }
+
+    .rank.other {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+      cursor: pointer
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .5);
+      z-index: 10
+    }
+
+    .modal-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      padding: 20px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 学生列表 */
+    .student-list {
+      flex: 1;
+      padding: 0 15px;
+      overflow-y: auto
+    }
+
+    .student-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      border-radius: 12px;
+      margin: 8px 0;
+      background: #fafafa
+    }
+
+    .info {
+      flex: 1
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333
+    }
+
+    /* 今日照片 */
+    .upload-area {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .upload-box {
+      width: 80%;
+      height: 200px;
+      border: 2px dashed #667eea;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .upload-box:hover {
+      background: #f0f0ff
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      color: #667eea;
+      margin-bottom: 10px
+    }
+
+    .upload-text {
+      font-size: 16px;
+      color: #667eea
+    }
+
+    .preview-img {
+      width: 100%;
+      height: 200px;
+      border-radius: 20px;
+      object-fit: cover;
+      margin-top: 10px
+    }
+
+    .desc-input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #e5e5e5;
+      border-radius: 15px;
+      margin-top: 10px;
+      font-size: 14px
+    }
+
+    .upload-btn {
+      width: 80%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .5);
+      z-index: 10
+    }
+
+    .modal-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      padding: 20px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- 顶部栏 -->
+    <div class="header">
+      <div class="user-info">
+        <div class="avatar">👩‍🏫</div>
+        <div>
+          <h2>刘老师</h2>
+        </div>
+      </div>
+      <div class="date-selector">
+        📅 2025年8月2日 星期六
+      </div>
+    </div>
+
+    <!-- 一级功能导航 -->
+    <div class="nav-tabs">
+      <div class="nav-tab" onclick="switchTab('rank')">🏆 排行榜</div>
+      <div class="nav-tab" onclick="switchTab('students')">学生列表</div>
+      <div class="nav-tab" onclick="switchTab('upload')">今日照片</div>
+    </div>
+
+    <!-- 积分排行榜 -->
+    <div class="content">
+      <div id="rank" class="tab-content active">
+        <div class="leaderboard-item">
+          <div class="rank gold">1</div>
+          <div class="student-avatar">👧</div>
+          <div style="flex: 1;">
+            <div style="font-weight: bold;">小红</div>
+            <div style="font-size: 12px; color: #999;">三年级一班</div>
+          </div>
+          <div style="font-size: 20px; font-weight: bold; color: #667eea;">450分</div>
+        </div>
+
+        <div class="leaderboard-item">
+          <div class="rank silver">2</div>
+          <div class="student-avatar">👦</div>
+          <div style="flex: 1;">
+            <div style="font-weight: bold;">小明</div>
+            <div style="font-size: 12px; color: #999;">三年级二班</div>
+          </div>
+          <div style="font-size: 20px; font-weight: bold; color: #667eea;">328分</div>
+        </div>
+
+        <div class="leaderboard-item">
+          <div class="rank bronze">3</div>
+          <div class="student-avatar">👧</div>
+          <div style="flex: 1;">
+            <div style="font-weight: bold;">小丽</div>
+            <div style="font-size: 12px; color: #999;">三年级一班</div>
+          </div>
+          <div style="font-size: 20px; font-weight: bold; color: #667eea;">310分</div>
+        </div>
+
+        <div class="leaderboard-item">
+          <div class="rank other">4</div>
+          <div class="student-avatar">👦</div>
+          <div style="flex: 1;">
+            <div style="font-weight: bold;">小强</div>
+            <div style="font-size: 12px; color: #999;">三年级二班</div>
+          </div>
+          <div style="font-size: 20px; font-weight: bold; color: #667eea;">285分</div>
+        </div>
+      </div>
+
+
+
+      <!-- 学生列表 -->
+      <div id="students" class="card-list" style="display:none">
+        <div class="student-item" onclick="openStudent('小明')">
+          <div class="name">小明</div>
+        </div>
+        <div class="student-item" onclick="openStudent('小红')">
+          <div class="name">小红</div>
+        </div>
+      </div>
+
+      <!-- 今日照片 -->
+      <div id="upload" class="upload-area" style="display:none">
+        <div class="upload-box" id="uploadBox" onclick="choosePhoto()">
+          <div class="upload-icon">📸</div>
+          <div class="upload-text">点击或拖拽上传今日照片</div>
+        </div>
+        <img id="preview" class="preview-img" style="display:none" />
+        <input class="desc-input" placeholder="添加描述..." />
+        <button class="upload-btn" onclick="uploadPhoto()">上传并发布</button>
+      </div>
+
+      <!-- 悬浮按钮 -->
+      <div class="floating-btn" onclick="showModal('addPoints')">+</div>
+
+      <!-- 添加积分 / 日志 模态框 -->
+      <div class="modal" id="modal">
+        <div class="modal-content">
+          <div class="close" onclick="closeModal()">×</div>
+          <div class="form-group">
+            <label class="form-label">学生</label>
+            <input type="text" class="form-input" id="studentName" placeholder="选择学生">
+          </div>
+          <div class="form-group">
+            <label class="form-label">积分变动</label>
+            <input type="number" class="form-input" id="points" placeholder="+/- 积分">
+          </div>
+          <div class="form-group">
+            <label class="form-label">日志描述</label>
+            <input type="text" class="form-input" id="desc" placeholder="今日表现">
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitForm()">确认</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(id) {
+      /* 1. 切换内容区域 */
+      ['rank', 'students', 'upload'].forEach(t => {
+        const el = document.getElementById(t);
+        if (el) el.style.display = t === id ? 'block' : 'none';
+      });
+
+      /* 2. 先清掉所有按钮的高亮 */
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      /* 3. 给当前点击的按钮加高亮 */
+      event.target.classList.add('active');
+    }
+    function openDetail(type) { alert('打开 ' + type) }
+    function openStudent(name) { alert('打开学生 ' + name) }
+    function openUpload() { alert('打开上传') }
+    function showModal(modalId) { document.getElementById('modal').style.display = 'block' }
+    function closeModal() { document.getElementById('modal').style.display = 'none' }
+    function submitForm() { alert('已提交'); closeModal() }
+  </script>
+</body>
+
+</html>

@@ -21,6 +21,14 @@
       "style": { "navigationBarTitleText": "教师日志系统" }
     },
     {
+      "path": "pages/management/management",
+      "style": { "navigationBarTitleText": "管理系统" }
+    },
+    {
+      "path": "pages/management/studentDetails",
+      "style": { "navigationBarTitleText": "学生详情" }
+    },
+    {
       "path": "pages/activities/activities",
       "style": { "navigationBarTitleText": "活动报名" }
     },
@@ -72,6 +80,12 @@
       {
         "pagePath": "pages/logsPage/logsTeach",
         "text": "日志"
+        // "iconPath": "static/tab-logs.png",
+        // "selectedIconPath": "static/tab-logs-active.png"
+      },
+      {
+        "pagePath": "pages/management/management",
+        "text": "管理"
         // "iconPath": "static/tab-logs.png",
         // "selectedIconPath": "static/tab-logs-active.png"
       },

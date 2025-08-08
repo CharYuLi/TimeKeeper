@@ -1,5 +1,6 @@
 <template>
   <view class="container">
+    <!-- 顶部栏 -->
     <view class="header">
       <view class="user-info">
         <view class="avatar">👩‍🏫</view>
@@ -12,14 +13,16 @@
       </view>
     </view>
 
+    <!-- 一级功能导航 -->
     <view class="nav-tabs">
       <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜
       </view>
       <view class="nav-tab" :class="{ active: activeTab === 'records' }" @click="switchTab('records')">📋 积分记录</view>
-      <view class="nav-tab" :class="{ active: activeTab === 'redeem' }" @click="switchTab('redeem')">🎁 积分兑换</view>
     </view>
 
+    <!-- 内容区域 -->
     <view class="content">
+      <!-- 积分排行榜 -->
       <view v-show="activeTab === 'leaderboard'" class="tab-content">
         <view class="leaderboard-item">
           <view class="rank gold">1</view>
@@ -62,6 +65,7 @@
         </view>
       </view>
 
+      <!-- 积分记录 -->
       <view v-show="activeTab === 'records'" class="tab-content">
         <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
           <view style="display: flex; justify-content: space-between; align-items: center;">
@@ -96,40 +100,6 @@
           <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-01 16:20</view>
         </view>
       </view>
-
-      <view v-show="activeTab === 'redeem'" class="tab-content">
-        <view class="redeem-item" @click="showRedeemDetail('文具套装', 50)">
-          <view class="redeem-icon">📝</view>
-          <view style="flex: 1;">
-            <view style="font-weight: bold;">文具套装</view>
-            <view style="font-size: 14px; color: #666;">包含铅笔、橡皮、尺子等</view>
-            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">50分</view>
-          </view>
-        </view>
-
-        <view class="redeem-item" @click="showRedeemDetail('小恐龙玩具', 80)">
-          <view class="redeem-icon">🦕</view>
-          <view style="flex: 1;">
-            <view style="font-weight: bold;">小恐龙玩具</view>
-            <view style="font-size: 14px; color: #666;">可动关节的可爱恐龙</view>
-            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">80分</view>
-          </view>
-        </view>
-
-        <view class="redeem-item" @click="showRedeemDetail('免作业券', 100)">
-          <view class="redeem-icon">🎫</view>
-          <view style="flex: 1;">
-            <view style="font-weight: bold;">免作业券</view>
-            <view style="font-size: 14px; color: #666;">可免一次家庭作业</view>
-            <view style="font-size: 18px; color: #667eea; margin-top: 5px;">100分</view>
-          </view>
-        </view>
-
-        <view class="empty-state">
-          <view class="empty-state-icon">🎯</view>
-          <p>你的积分还不够哦！<br>继续加油获得更多积分！</p>
-        </view>
-      </view>
     </view>
 
     <view class="modal" v-show="showDetailModal">
@@ -138,20 +108,6 @@
         <h3>{{ modalTitle }}</h3>
         <p v-html="modalContent" style="margin: 20px 0;"></p>
         <button class="btn btn-primary" @click="closeModal" style="width: 100%;">知道了</button>
-      </view>
-    </view>
-
-    <view class="modal" v-show="showRedeemModal">
-      <view class="modal-content">
-        <span class="close-btn" @click="closeModal">×</span>
-        <h3>申请兑换 {{ redeemItem }}</h3>
-        <p style="margin: 20px 0;">确定要用 <span style="color: #667eea; font-weight: bold;">{{ redeemPoints }}</span> 积分兑换
-          <span style="font-weight: bold;">{{ redeemItem }}</span> 吗？</p>
-        <view style="display: flex; gap: 10px;">
-          <button class="btn btn-secondary" style="flex: 1; background: #f0f0f0; color: #666;"
-            @click="closeModal">取消</button>
-          <button class="btn btn-primary" style="flex: 1;" @click="submitRedeem">确认申请</button>
-        </view>
       </view>
     </view>
   </view>
@@ -168,11 +124,8 @@ import { exchangeProduct } from '@/api/points';
 
 const activeTab = ref('leaderboard');
 const showDetailModal = ref(false);
-const showRedeemModal = ref(false);
 const modalTitle = ref('');
 const modalContent = ref('');
-const redeemItem = ref('');
-const redeemPoints = ref(0);
 
 const switchTab = (tabName) => {
   activeTab.value = tabName;
@@ -188,20 +141,8 @@ const showRecordDetail = (title, points, time) => {
   showDetailModal.value = true;
 };
 
-const showRedeemDetail = (item, points) => {
-  redeemItem.value = item;
-  redeemPoints.value = points;
-  showRedeemModal.value = true;
-};
-
 const closeModal = () => {
   showDetailModal.value = false;
-  showRedeemModal.value = false;
-};
-
-const submitRedeem = () => {
-  alert('兑换申请已提交，等待老师审批！');
-  closeModal();
 };
 
 // 接口
@@ -474,34 +415,6 @@ body {
   color: #999;
 }
 
-.redeem-item {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.redeem-item:hover {
-  border-color: #667eea;
-  background: #f8f9ff;
-}
-
-.redeem-icon {
-  width: 60px;
-  height: 60px;
-  background: #f0f0ff;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  font-size: 30px;
-}
-
 .btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -545,31 +458,5 @@ body {
   color: #667eea;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
   z-index: 10;
-}
-
-.navbar {
-  height: 100rpx;
-  background: #fff;
-  display: flex;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  color: #666;
-}
-
-.nav-item.active {
-  color: #667eea;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  margin-bottom: 6rpx;
 }
 </style>
