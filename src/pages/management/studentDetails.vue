@@ -1,7 +1,6 @@
 <template>
   <view class="container">
     <view class="header">
-      <view class="back hover" @tap="goBack">‹</view>
       <view class="title">小明同学</view>
     </view>
 
@@ -112,7 +111,69 @@
         <p style="background: #f8f9ff; padding: 10px; border-radius: 8px;">{{ taskModalData.comment }}</p>
       </view>
     </view>
+
+    <!-- 添加学生积分模态框显示按钮 -->
+    <view class="fab" v-show="activeTab === 'points'" @click="showAddLog">+</view>
+    <!-- 添加学生日志模态框显示按钮 -->
+    <view class="fab" v-show="activeTab === 'logs'" @click="showAddLog">+</view>
   </view>
+
+
+  <!-- 添加学生积分模态框 -->
+  <view class="modal" v-show="activeTab === 'points' && showAddLogModal" @click.self="closeModal('addLog')">
+    <view class="modal-content">
+      <span class="close-btn" @click="closeModal('addLog')">×</span>
+      <h3>修改学生积分</h3>
+      <view class="form-group">
+        <label>学生姓名</label>
+        <select>
+          <option>小明</option>
+          <option>小红</option>
+          <option>小丽</option>
+        </select>
+      </view>
+      <view class="form-group">
+        <label>日志描述</label>
+        <textarea placeholder="请输入积分变动原因..."></textarea>
+      </view>
+      <view class="btn-group">
+        <button class="btn btn-secondary" @click="closeModal('addLog')">取消</button>
+        <button class="btn btn-primary" @click="saveLog">保存</button>
+      </view>
+    </view>
+  </view>
+  <!-- 添加学生日志模态框 -->
+  <view class="modal" v-show="activeTab === 'logs' && showAddLogModal" @click.self="closeModal('addLog')">
+    <view class="modal-content">
+      <span class="close-btn" @click="closeModal('addLog')">×</span>
+      <h3>添加学生日志</h3>
+      <view class="form-group">
+        <label>学生姓名</label>
+        <select>
+          <option>小明</option>
+          <option>小红</option>
+          <option>小丽</option>
+        </select>
+      </view>
+      <view class="form-group">
+        <label>学科表现</label>
+        <select>
+          <option>语文 - 优秀</option>
+          <option>数学 - 良好</option>
+          <option>英语 - 需加强</option>
+        </select>
+      </view>
+      <view class="form-group">
+        <label>教师点评</label>
+        <textarea placeholder="请输入今日点评..."></textarea>
+      </view>
+      <view class="btn-group">
+        <button class="btn btn-secondary" @click="closeModal('addLog')">取消</button>
+        <button class="btn btn-primary" @click="saveLog">保存</button>
+      </view>
+    </view>
+  </view>
+
 </template>
 
 <script setup>
@@ -144,10 +205,21 @@ function showTaskDetail(subject, content, status, comment) {
   }
   showTaskModal.value = true
 }
+function showAddLog() {
+  showAddLogModal.value = true
+}
 function closeModal(modal) {
   if (modal === 'task') showTaskModal.value = false
   if (modal === 'reply') showReplyModal.value = false
   if (modal === 'addLog') showAddLogModal.value = false
+}
+function sendReply() {
+  alert('回复已发送给家长！')
+  closeModal('reply')
+}
+function saveLog() {
+  alert('已保存！')
+  closeModal('addLog')
 }
 </script>
 
@@ -168,11 +240,6 @@ function closeModal(modal) {
   padding: 30rpx;
   display: flex;
   align-items: center;
-}
-
-.back {
-  font-size: 40rpx;
-  margin-right: 20rpx;
 }
 
 .title {
@@ -381,6 +448,29 @@ function closeModal(modal) {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+}
+
 .modal {
   display: flex;
   position: fixed;
@@ -422,5 +512,62 @@ function closeModal(modal) {
   font-size: 24px;
   cursor: pointer;
   color: #999;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

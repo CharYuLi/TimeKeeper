@@ -16,10 +16,8 @@
 
     <!-- 一级功能导航 -->
     <view class="nav-tabs">
-      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜
-      </view>
+      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜</view>
       <view class="nav-tab" :class="{ active: activeTab === 'students' }" @click="switchTab('students')">学生列表</view>
-      <view class="nav-tab" :class="{ active: activeTab === 'upload' }" @click="switchTab('upload')">今日照片</view>
     </view>
 
     <!-- 内容区域 -->
@@ -74,47 +72,6 @@
           <view class="name">{{ stu.name }}</view>
         </view>
       </view>
-
-      <!-- 今日照片 -->
-      <view v-show="activeTab === 'upload'" class="upload-area">
-        <view v-if="!preview" class="upload-box" hover-class="hover" @tap="choosePhoto">
-          <view class="upload-icon">📸</view>
-          <view class="upload-text">点击或拖拽上传今日照片</view>
-        </view>
-        <image v-else :src="preview" class="preview-img" mode="aspectFill" />
-        <input v-model="description" class="desc-input" placeholder="添加描述..." />
-        <button class="upload-btn" hover-class="hover" @tap="uploadPhoto">
-          {{ preview ? '重新上传' : '上传并发布' }}
-        </button>
-      </view>
-    </view>
-
-    <!-- 悬浮按钮 -->
-    <view class="floating-btn" @tap="showModal">+</view>
-
-    <!-- 添加积分 / 日志模态框 -->
-    <view v-if="showAddModal" class="modal" @tap="closeModal">
-      <view class="modal-content" @tap.stop>
-        <view class="close" @tap="closeModal">×</view>
-        <view class="form-group">
-          <label>学生</label>
-          <picker mode="selector" :range="studentNames" :value="studentIdx" @change="onStudentChange">
-            <view class="picker">{{ studentNames[studentIdx] }}</view>
-          </picker>
-        </view>
-        <view class="form-group">
-          <label>积分变动</label>
-          <input v-model="points" type="number" placeholder="+/- 积分" />
-        </view>
-        <view class="form-group">
-          <label>日志描述</label>
-          <input v-model="logDesc" placeholder="今日表现" />
-        </view>
-        <view class="btn-group">
-          <button class="btn-secondary" @tap="closeModal">取消</button>
-          <button class="btn-primary" @tap="submitForm">确认</button>
-        </view>
-      </view>
     </view>
   </view>
 </template>
@@ -125,18 +82,12 @@ import { ref, computed } from 'vue';
 
 /* 状态 */
 const activeTab = ref('leaderboard');
-const showAddModal = ref(false);
-const preview = ref('');
-const description = ref('');
-const points = ref('');
-const logDesc = ref('');
 const studentIdx = ref(0);
 
 /* 静态数据 */
 const tabs = [
   { key: 'rank', name: '排行榜' },
   { key: 'students', name: '学生列表' },
-  { key: 'upload', name: '今日照片' }
 ];
 
 const rankList = [
@@ -155,29 +106,7 @@ const studentNames = computed(() => studentList.map(s => s.name));
 /* tools */
 function switchTab(key) { activeTab.value = key }
 function openStudent(id) { uni.navigateTo({ url: `/pages/management/studentDetails` }) }
-function choosePhoto() {
-  uni.chooseImage({
-    count: 1,
-    success: (res) => (preview.value = res.tempFilePaths[0])
-  });
-}
-function uploadPhoto() {
-  if (!preview.value) return uni.showToast({ title: '请选择照片', icon: 'none' });
-  uni.showLoading({ title: '上传中...' });
-  setTimeout(() => {
-    uni.hideLoading();
-    uni.showToast({ title: '上传成功' });
-    preview.value = '';
-    description.value = '';
-  }, 1000);
-}
-function showModal() { showAddModal.value = true }
-function closeModal() { showAddModal.value = false }
 function onStudentChange(e) { studentIdx.value = e.detail.value }
-function submitForm() {
-  uni.showToast({ title: '已保存' });
-  closeModal();
-}
 </script>
 
 <style>
@@ -323,6 +252,7 @@ body {
   }
 }
 
+/* 积分排行榜 */
 .leaderboard-item {
   display: flex;
   align-items: center;
@@ -376,6 +306,7 @@ body {
   opacity: 0.8;
 }
 
+/* 学生列表 */
 .list {
   display: flex;
   flex-direction: column;
@@ -397,68 +328,7 @@ body {
   color: #333;
 }
 
-.upload-area {
-  flex: 1;
-  padding: 60rpx 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.upload-box {
-  width: 80%;
-  height: 240rpx;
-  border: 2rpx dashed #667eea;
-  border-radius: 40rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.upload-box.hover {
-  background: #f0f0ff;
-}
-
-.upload-icon {
-  font-size: 64rpx;
-  color: #667eea;
-  margin-bottom: 20rpx;
-}
-
-.upload-text {
-  font-size: 32rpx;
-  color: #667eea;
-}
-
-.preview-img {
-  width: 80%;
-  height: 240rpx;
-  border-radius: 40rpx;
-  object-fit: cover;
-}
-
-.desc-input {
-  width: 80%;
-  padding: 20rpx;
-  border: 1rpx solid #e5e5e5;
-  border-radius: 30rpx;
-  margin-top: 20rpx;
-  font-size: 28rpx;
-}
-
-.upload-btn {
-  width: 80%;
-  padding: 30rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  border: none;
-  border-radius: 50rpx;
-  margin-top: 40rpx;
-  font-size: 32rpx;
-}
-
+/* 弹窗 */
 .modal {
   position: fixed;
   top: 0;
@@ -481,18 +351,37 @@ body {
 }
 
 .close {
-  font-size: 48rpx;
-  color: #999;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer
 }
 
 .form-group {
   margin-bottom: 30rpx;
+  bottom:160rpx;
 }
 
-.form-label {
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 20rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 20rpx;
   font-size: 28rpx;
-  color: #333;
-  margin-bottom: 10rpx;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .picker {
@@ -502,12 +391,6 @@ body {
   font-size: 28rpx;
 }
 
-.form-group input {
-  padding: 20rpx;
-  border: 1rpx solid #e5e5e5;
-  border-radius: 20rpx;
-  font-size: 28rpx;
-}
 
 .btn-group {
   display: flex;
@@ -533,83 +416,4 @@ body {
   color: #fff;
 }
 
-/* 悬浮按钮 */
-.floating-btn {
-  position: fixed;
-  bottom: 40rpx;
-  right: 40rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
 </style>
-
-
-<!-- <script setup>
-import { ref, computed } from 'vue';
-import { useUserStore } from '@/stores/user';
-
-/* 状态 */
-const activeTab        = ref('rank');
-const showAddModal     = ref(false);
-const preview          = ref('');
-const description      = ref('');
-const points           = ref('');
-const logDesc          = ref('');
-const studentIdx       = ref(0);
-
-/* 静态数据 */
-const tabs = [
-  { key: 'rank',     name: '积分排行榜' },
-  { key: 'students', name: '学生列表' },
-  { key: 'upload',   name: '今日照片' }
-];
-
-const rankList = [
-  { id: 1, name: '小红', points: 450 },
-  { id: 2, name: '小明', points: 428 },
-  { id: 3, name: '小丽', points: 310 }
-];
-
-const studentList = [
-  { id: 1, name: '小明', avatar: '👦' },
-  { id: 2, name: '小红', avatar: '👧' }
-];
-
-const studentNames = computed(() => studentList.map(s => s.name));
-
-/* tools */
-function switchTab(key) { activeTab.value = key }
-function openStudent(id) { uni.navigateTo({ url: `/pages/student/detail?id=${id}` }) }
-function choosePhoto() {
-  uni.chooseImage({
-    count: 1,
-    success: (res) => (preview.value = res.tempFilePaths[0])
-  });
-}
-function uploadPhoto() {
-  if (!preview.value) return uni.showToast({ title: '请选择照片', icon: 'none' });
-  uni.showLoading({ title: '上传中...' });
-  setTimeout(() => {
-    uni.hideLoading();
-    uni.showToast({ title: '上传成功' });
-    preview.value = '';
-    description.value = '';
-  }, 1000);
-}
-function showModal() { showAddModal.value = true }
-function closeModal() { showAddModal.value = false }
-function onStudentChange(e) { studentIdx.value = e.detail.value }
-function submitForm() {
-  uni.showToast({ title: '已保存' });
-  closeModal();
-}
-</script> -->

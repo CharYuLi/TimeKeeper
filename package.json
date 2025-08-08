@@ -4,6 +4,8 @@
   "scripts": {
     "dev:custom": "uni -p",
     "dev:h5": "uni",
+    "dev:teacher": "npx cross-env UNI_ROLE=teacher node build-role.js && npm run dev:h5",
+    "dev:parent": "npx cross-env UNI_ROLE=parent node build-role.js && npm run dev:h5",
     "dev:h5:ssr": "uni --ssr",
     "dev:mp-alipay": "uni -p mp-alipay",
     "dev:mp-baidu": "uni -p mp-baidu",
@@ -64,6 +66,8 @@
     "@dcloudio/uni-stacktracey": "3.0.0-4070520250711001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4070520250711001",
     "@vue/runtime-core": "^3.4.21",
+    "cross-env": "^10.0.0",
+    "fs-extra": "^11.3.1",
     "vite": "5.2.8"
   }
 }

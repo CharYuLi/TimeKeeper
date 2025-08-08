@@ -1,7 +1,6 @@
 <template>
   <view class="page">
     <view class="header">
-      <view class="back" @tap="goBack">‹</view>
       <view class="title">消息设置</view>
     </view>
 
@@ -20,10 +19,9 @@ const config = reactive({
   system: { label: '系统公告', value: false }
 })
 function toggle(key) { config[key].value = !config[key].value }
-function goBack() { uni.navigateBack() }
 </script>
 
-<style scoped>
+<style>
 .page {
   max-width: 375px;
   margin: 0 auto;
@@ -40,11 +38,6 @@ function goBack() { uni.navigateBack() }
   padding: 30rpx;
   display: flex;
   align-items: center;
-}
-
-.back {
-  font-size: 40rpx;
-  margin-right: 20rpx;
 }
 
 .title {

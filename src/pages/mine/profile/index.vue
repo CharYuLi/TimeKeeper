@@ -1,13 +1,12 @@
 <template>
   <view class="page">
     <view class="header">
-      <view class="back" @tap="goBack">‹</view>
       <view class="title">个人资料</view>
     </view>
 
     <view class="avatar-block">
       <view class="avatar">👦</view>
-      <text class="tip">点击头像可更换</text>
+      <text class="tip">点击更换头像</text>
       <input v-model="nickName" class="input" placeholder="请输入昵称" />
       <input v-model="phone" class="input" placeholder="手机号" />
     </view>
@@ -21,7 +20,6 @@ import { ref } from 'vue'
 
 const nickName = ref('小明同学')
 const phone = ref('138****8888')
-function goBack() { uni.navigateBack() }
 function save() { uni.showToast({ title: '已保存' }) }
 </script>
 
@@ -42,11 +40,6 @@ function save() { uni.showToast({ title: '已保存' }) }
   padding: 30rpx;
   display: flex;
   align-items: center;
-}
-
-.back {
-  font-size: 40rpx;
-  margin-right: 20rpx;
 }
 
 .title {

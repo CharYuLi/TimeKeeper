@@ -29,6 +29,10 @@
       "style": { "navigationBarTitleText": "学生详情" }
     },
     {
+      "path": "pages/photoUpload/photoUpload",
+      "style": { "navigationBarTitleText": "照片上传" }
+    },
+    {
       "path": "pages/activities/activities",
       "style": { "navigationBarTitleText": "活动报名" }
     },
@@ -46,7 +50,7 @@
     },
     {
       "path": "pages/mine/notification/index",
-      "style": { "navigationBarTitleText": "消息通知" }
+      "style": { "navigationBarTitleText": "消息管理" }
     },
     {
       "path": "pages/mine/help/index",
@@ -68,38 +72,30 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页"
-        // "iconPath": "static/tab-points.png",
-        // "selectedIconPath": "static/tab-points-active.png"
       },
       {
         "pagePath": "pages/points/pointsTeach",
         "text": "积分"
-        // "iconPath": "static/tab-points.png",
-        // "selectedIconPath": "static/tab-points-active.png"
       },
       {
         "pagePath": "pages/logsPage/logsTeach",
         "text": "日志"
-        // "iconPath": "static/tab-logs.png",
-        // "selectedIconPath": "static/tab-logs-active.png"
       },
       {
         "pagePath": "pages/management/management",
         "text": "管理"
-        // "iconPath": "static/tab-logs.png",
-        // "selectedIconPath": "static/tab-logs-active.png"
+      },
+      {
+        "pagePath": "pages/photoUpload/photoUpload",
+        "text": "照片"
       },
       {
         "pagePath": "pages/activities/activities",
         "text": "活动"
-        // "iconPath": "static/tab-activities.png",
-        // "selectedIconPath": "static/tab-activities-active.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "text": "我的"
-        // "iconPath": "static/tab-mine.png",
-        // "selectedIconPath": "static/tab-mine-active.png"
       }
     ]
   }

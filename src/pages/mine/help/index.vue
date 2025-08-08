@@ -1,7 +1,6 @@
 <template>
   <view class="page">
     <view class="header">
-      <view class="back" @tap="goBack">‹</view>
       <view class="title">帮助中心</view>
     </view>
 
@@ -24,7 +23,6 @@ const qa = ref([
 ]);
 const openIndex = ref(-1);
 function toggle(i) { openIndex.value = openIndex.value === i ? -1 : i; }
-function goBack() { uni.navigateBack() }
 </script>
 
 <style scoped>
@@ -44,11 +42,6 @@ function goBack() { uni.navigateBack() }
   padding: 30rpx;
   display: flex;
   align-items: center;
-}
-
-.back {
-  font-size: 40rpx;
-  margin-right: 20rpx;
 }
 
 .title {

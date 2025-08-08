@@ -7,9 +7,6 @@
         <view class="hero-title">{{ detail.title }}</view>
         <view class="hero-sub">{{ detail.subtitle }}</view>
       </view>
-      <view class="header">
-        <view class="back hover" @tap="goBack">‹</view>
-      </view>
     </view>
 
     <!-- 核心信息 -->
@@ -128,22 +125,6 @@ function openMap() {
 
 .hero-sub {
   font-size: 24rpx;
-}
-
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 24rpx;
-  display: flex;
-  align-items: center;
-  z-index: 2;
-}
-
-.back {
-  font-size: 36rpx;
-  color: #fff;
 }
 
 .content {
