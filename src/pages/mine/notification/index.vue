@@ -23,7 +23,6 @@ function toggle(key) { config[key].value = !config[key].value }
 
 <style>
 .page {
-  max-width: 375px;
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;

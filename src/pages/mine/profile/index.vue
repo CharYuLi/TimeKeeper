@@ -25,7 +25,6 @@ function save() { uni.showToast({ title: '已保存' }) }
 
 <style scoped>
 .page {
-  max-width: 375px;
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;

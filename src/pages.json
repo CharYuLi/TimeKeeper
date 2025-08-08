@@ -74,11 +74,11 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/points/pointsTeach",
+        "pagePath": "pages/points/points",
         "text": "积分"
       },
       {
-        "pagePath": "pages/logsPage/logsTeach",
+        "pagePath": "pages/logsPage/logs",
         "text": "日志"
       },
       {

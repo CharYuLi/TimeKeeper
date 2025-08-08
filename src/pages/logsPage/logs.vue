@@ -215,7 +215,6 @@ body {
 }
 
 .container {
-  max-width: 375px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;

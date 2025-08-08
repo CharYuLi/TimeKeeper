@@ -18,18 +18,38 @@
 
         <!-- 今日表现 -->
         <view class="performance-card">
-          <h3 style="margin-bottom: 15px; color: #667eea;">🎯 加分明细</h3>
-          <view class="behavior-item">
-            <span>桌面整洁 +2分</span>
+          <h3 style="margin-bottom: 15px; color: #667eea;">🎯 积分明细</h3>
+          <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
+            <view class="record-content">
+              <view class="record-info">
+                <view class="record-title">完成数学作业</view>
+                <view class="record-description">按时完成作业，正确率90%</view>
+              </view>
+              <view class="record-score positive">+10</view>
+            </view>
+            <view class="record-time">2025-08-02 14:30</view>
           </view>
-          <view class="behavior-item">
-            <span>专注听讲 +3分</span>
+
+          <view class="record-item" @click="showRecordDetail('帮助同学', '+5', '2025-08-02 10:15')">
+            <view class="record-content">
+              <view class="record-info">
+                <view class="record-title">帮助同学</view>
+                <view class="record-description">主动帮助同桌解决问题</view>
+              </view>
+              <view class="record-score positive">+5</view>
+            </view>
+            <view class="record-time">2025-08-02 10:15</view>
           </view>
-          <view class="behavior-item">
-            <span>餐后收拾 +2分</span>
-          </view>
-          <view class="behavior-item">
-            <span>完成数学作业 +2分</span>
+
+          <view class="record-item" @click="showRecordDetail('兑换文具套装', '-50', '2025-08-01 16:20')">
+            <view class="record-content">
+              <view class="record-info">
+                <view class="record-title">兑换文具套装</view>
+                <view class="record-description">精美文具套装一套</view>
+              </view>
+              <view class="record-score negative">-50</view>
+            </view>
+            <view class="record-time">2025-08-01 16:20</view>
           </view>
         </view>
 
@@ -112,6 +132,16 @@
       </view>
     </view>
 
+    <!-- 积分明细模态框 -->
+    <view class="modal" v-show="showDetailModal">
+      <view class="modal-content">
+        <span class="close-btn" @click="closeModal">×</span>
+        <h3>{{ modalTitle }}</h3>
+        <p v-html="modalContent" style="margin: 20px 0;"></p>
+        <button class="btn btn-primary" @click="closeModal" style="width: 100%;">知道了</button>
+      </view>
+    </view>
+
     <!-- 添加学生积分模态框显示按钮 -->
     <view class="fab" v-show="activeTab === 'points'" @click="showAddLog">+</view>
     <!-- 添加学生日志模态框显示按钮 -->
@@ -124,14 +154,6 @@
     <view class="modal-content">
       <span class="close-btn" @click="closeModal('addLog')">×</span>
       <h3>修改学生积分</h3>
-      <view class="form-group">
-        <label>学生姓名</label>
-        <select>
-          <option>小明</option>
-          <option>小红</option>
-          <option>小丽</option>
-        </select>
-      </view>
       <view class="form-group">
         <label>日志描述</label>
         <textarea placeholder="请输入积分变动原因..."></textarea>
@@ -180,6 +202,9 @@
 import { ref } from 'vue'
 
 const activeTab = ref('points')
+const showDetailModal = ref(false);
+const modalTitle = ref('');
+const modalContent = ref('');
 const showTaskModal = ref(false)
 const showReplyModal = ref(false)
 const showAddLogModal = ref(false)
@@ -191,10 +216,19 @@ const taskModalData = ref({
   comment: ''
 })
 
-function goBack() { uni.navigateBack() }
 function switchTab(tabName) {
   activeTab.value = tabName
 }
+const showRecordDetail = (title, points, time) => {
+  modalTitle.value = title;
+  modalContent.value = `
+    <strong>积分变化：</strong>${points}<br>
+    <strong>时间：</strong>${time}<br>
+    <strong>说明：</strong>${title}
+  `;
+  showDetailModal.value = true;
+};
+
 function showTaskDetail(subject, content, status, comment) {
   taskModalData.value = {
     title: `${subject}作业详情`,
@@ -209,6 +243,7 @@ function showAddLog() {
   showAddLogModal.value = true
 }
 function closeModal(modal) {
+  showDetailModal.value = false;
   if (modal === 'task') showTaskModal.value = false
   if (modal === 'reply') showReplyModal.value = false
   if (modal === 'addLog') showAddLogModal.value = false
@@ -225,7 +260,6 @@ function saveLog() {
 
 <style>
 .page {
-  max-width: 375px;
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;
@@ -323,6 +357,63 @@ function saveLog() {
 .performance-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.record-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  cursor: pointer;
+  border-left: 4px solid #667eea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.record-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.record-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-info {
+  flex: 1;
+}
+
+.record-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.record-description {
+  font-size: 12px;
+  color: #999;
+}
+
+.record-score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.record-score.positive {
+  color: #4caf50;
+}
+
+.record-score.negative {
+  color: #f44336;
+}
+
+.record-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+  margin-left: 1px;
 }
 
 .subject-row {
@@ -528,7 +619,6 @@ function saveLog() {
 .form-group input,
 .form-group textarea,
 .form-group select {
-  width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 10px;

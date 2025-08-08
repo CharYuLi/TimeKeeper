@@ -27,7 +27,6 @@ function toggle(i) { openIndex.value = openIndex.value === i ? -1 : i; }
 
 <style scoped>
 .page {
-  max-width: 375px;
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;

@@ -15,8 +15,7 @@
 
     <!-- 一级功能导航 -->
     <view class="nav-tabs">
-      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜
-      </view>
+      <view class="nav-tab" :class="{ active: activeTab === 'leaderboard' }" @click="switchTab('leaderboard')">🏆 排行榜</view>
       <view class="nav-tab" :class="{ active: activeTab === 'records' }" @click="switchTab('records')">📋 积分记录</view>
     </view>
 
@@ -183,7 +182,6 @@ body {
 }
 
 .container {
-  max-width: 375px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;

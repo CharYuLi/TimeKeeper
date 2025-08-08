@@ -7,6 +7,7 @@
         <view>
           <h2>刘老师</h2>
         </view>
+        </br>
       </view>
       <view class="date-selector">
         📅 2025年8月2日 星期六
@@ -74,7 +75,6 @@ body {
 }
 
 .container {
-  max-width: 375px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;

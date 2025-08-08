@@ -14,44 +14,47 @@
       </view>
     </view>
 
+    <!-- 一级功能导航 -->
     <view class="nav-tabs">
       <view class="nav-tab" :class="{ active: activeTab === 'records' }" @click="switchTab('records')">📋 积分记录</view>
       <view class="nav-tab" :class="{ active: activeTab === 'redeem' }" @click="switchTab('redeem')">🎁 积分兑换</view>
     </view>
 
+    <!-- 内容区域 -->
     <view class="content">
+      <!-- 积分记录 -->
       <view v-show="activeTab === 'records'" class="tab-content">
         <view class="record-item" @click="showRecordDetail('完成数学作业', '+10', '2025-08-02 14:30')">
-          <view style="display: flex; justify-content: space-between; align-items: center;">
-            <view>
-              <view style="font-weight: bold;">完成数学作业</view>
-              <view style="font-size: 12px; color: #999;">按时完成作业，正确率90%</view>
+          <view class="record-content">
+            <view class="record-info">
+              <view class="record-title">完成数学作业</view>
+              <view class="record-description">按时完成作业，正确率90%</view>
             </view>
-            <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+10</view>
+            <view class="record-score positive">+10</view>
           </view>
-          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 14:30</view>
+          <view class="record-time">2025-08-02 14:30</view>
         </view>
 
         <view class="record-item" @click="showRecordDetail('帮助同学', '+5', '2025-08-02 10:15')">
-          <view style="display: flex; justify-content: space-between; align-items: center;">
-            <view>
-              <view style="font-weight: bold;">帮助同学</view>
-              <view style="font-size: 12px; color: #999;">主动帮助同桌解决问题</view>
+          <view class="record-content">
+            <view class="record-info">
+              <view class="record-title">帮助同学</view>
+              <view class="record-description">主动帮助同桌解决问题</view>
             </view>
-            <view style="font-size: 18px; font-weight: bold; color: #4caf50;">+5</view>
+            <view class="record-score positive">+5</view>
           </view>
-          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-02 10:15</view>
+          <view class="record-time">2025-08-02 10:15</view>
         </view>
 
         <view class="record-item" @click="showRecordDetail('兑换文具套装', '-50', '2025-08-01 16:20')">
-          <view style="display: flex; justify-content: space-between; align-items: center;">
-            <view>
-              <view style="font-weight: bold;">兑换文具套装</view>
-              <view style="font-size: 12px; color: #999;">精美文具套装一套</view>
+          <view class="record-content">
+            <view class="record-info">
+              <view class="record-title">兑换文具套装</view>
+              <view class="record-description">精美文具套装一套</view>
             </view>
-            <view style="font-size: 18px; font-weight: bold; color: #f44336;">-50</view>
+            <view class="record-score negative">-50</view>
           </view>
-          <view style="font-size: 12px; color: #999; margin-top: 5px;">2025-08-01 16:20</view>
+          <view class="record-time">2025-08-01 16:20</view>
         </view>
       </view>
 
@@ -104,7 +107,8 @@
         <span class="close-btn" @click="closeModal">×</span>
         <h3>申请兑换 {{ redeemItem }}</h3>
         <p style="margin: 20px 0;">确定要用 <span style="color: #667eea; font-weight: bold;">{{ redeemPoints }}</span> 积分兑换
-          <span style="font-weight: bold;">{{ redeemItem }}</span> 吗？</p>
+          <span style="font-weight: bold;">{{ redeemItem }}</span> 吗？
+        </p>
         <view style="display: flex; gap: 10px;">
           <button class="btn btn-secondary" style="flex: 1; background: #f0f0f0; color: #666;"
             @click="closeModal">取消</button>
@@ -124,7 +128,7 @@ import { exchangeProduct } from '@/api/points';
 // import { gainPointsForchild } from '@/api/points';
 
 
-const activeTab = ref('leaderboard');
+const activeTab = ref('records');
 const showDetailModal = ref(false);
 const showRedeemModal = ref(false);
 const modalTitle = ref('');
@@ -192,7 +196,6 @@ body {
 }
 
 .container {
-  max-width: 375px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;
@@ -325,68 +328,61 @@ body {
   }
 }
 
-.leaderboard-item {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background: white;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.leaderboard-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.rank {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-right: 15px;
-  font-size: 18px;
-}
-
-.rank.gold {
-  background: #FFD700;
-  color: white;
-}
-
-.rank.silver {
-  background: #C0C0C0;
-  color: white;
-}
-
-.rank.bronze {
-  background: #CD7F32;
-  color: white;
-}
-
-.rank.other {
-  background: #f0f0f0;
-  color: #666;
-}
-
 .record-item {
+  margin-bottom: 15px;
+  padding: 15px;
   background: #f8f9ff;
   border-radius: 12px;
-  padding: 15px;
   margin-bottom: 15px;
   transition: all 0.3s;
   cursor: pointer;
   border-left: 4px solid #667eea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .record-item:hover {
   transform: translateX(5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.record-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-info {
+  flex: 1;
+}
+
+.record-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.record-description {
+  font-size: 12px;
+  color: #999;
+}
+
+.record-score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.record-score.positive {
+  color: #4caf50;
+}
+
+.record-score.negative {
+  color: #f44336;
+}
+
+.record-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+  margin-left: 1px;
 }
 
 .modal {
@@ -484,48 +480,5 @@ body {
 .empty-state-icon {
   font-size: 48px;
   margin-bottom: 20px;
-}
-
-.floating-btn {
-  position: absolute;
-  bottom: 120rpx;
-  right: 40rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48rpx;
-  color: #667eea;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
-.navbar {
-  height: 100rpx;
-  background: #fff;
-  display: flex;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  color: #666;
-}
-
-.nav-item.active {
-  color: #667eea;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  margin-bottom: 6rpx;
 }
 </style>

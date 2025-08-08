@@ -125,7 +125,6 @@ body {
 }
 
 .container {
-  max-width: 375px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;
@@ -327,93 +326,4 @@ body {
   font-weight: bold;
   color: #333;
 }
-
-/* 弹窗 */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-}
-
-.modal-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  padding: 40rpx;
-  border-top-left-radius: 50rpx;
-  border-top-right-radius: 50rpx;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer
-}
-
-.form-group {
-  margin-bottom: 30rpx;
-  bottom:160rpx;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #667eea;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  padding: 20rpx;
-  border: 1rpx solid #e5e5e5;
-  border-radius: 20rpx;
-  font-size: 28rpx;
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.picker {
-  padding: 20rpx;
-  border: 1rpx solid #e5e5e5;
-  border-radius: 20rpx;
-  font-size: 28rpx;
-}
-
-
-.btn-group {
-  display: flex;
-  gap: 20rpx;
-  margin-top: 40rpx;
-}
-
-.btn-secondary,
-.btn-primary {
-  flex: 1;
-  padding: 24rpx 0;
-  font-size: 32rpx;
-  border-radius: 50rpx;
-}
-
-.btn-secondary {
-  background: #f5f5f5;
-  color: #333;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-}
-
 </style>

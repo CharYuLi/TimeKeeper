@@ -63,7 +63,6 @@ function onTouchEnd(e) {
 
 <style scoped>
 .page {
-  max-width: 375px;
   margin: 0 auto;
   min-height: 100vh;
   background: #fff;
