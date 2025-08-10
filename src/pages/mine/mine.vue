@@ -46,25 +46,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import RegisterForm from "../../components/registerForm.vue";
-// import { useUserStore } from "@/stores/user";
-
-// const userStore = useUserStore();
 
 const showRegister = ref(false);
 const avatar = ref("👦");
 const name = ref("小明同学");
-const roleText = computed(() => {
-  switch (userStore.role) {
-    case "teacher":
-      return "老师";
-    case "parent":
-      return "家长";
-    default:
-      return "学生";
-  }
-});
 
 const menuList = [
   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
@@ -85,7 +72,7 @@ function handleLogout() {
   uni.showModal({
     title: "提示",
     content: "确定要退出登录吗？",
-    success: (res) => res.confirm && userStore.logout(),
+
   });
 }
 </script>
