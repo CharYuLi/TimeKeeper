@@ -3,7 +3,7 @@
   <view class="mask" @tap.self="$emit('close')">
     <view class="sheet">
       <view class="title">注册</view>
-      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false"/>
+      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false" />
       <button class="btn" @tap="doRegister">注册并开始</button>
     </view>
   </view>
@@ -26,26 +26,29 @@ async function doRegister() {
 
   try {
     // 1. 拿 code（不要用 wx.getOpenId，那是云函数写法）
-    const code = await wx.login().code
+    const code = await wx.login()
     if (!code) {
       throw new Error('获取登录状态失败，请重试')
     }
 
-    let URL = 'https://api.weixin.qq.com/sns/jscode2session?appid=wx3bfe2e11e43e4e06&secret=e7ca8ab58b47f9bd81a750a92cd62620&js_code=' + code + '&grant_type=authorization_code'
-
-    let openid = wx.request({
-      url: URL,
+    const res = await uni.request({
+      url: `https://api.weixin.qq.com/sns/jscode2session`,
       method: 'GET',
-      success: function (res) {
-        openid = res.data
+      data: {
+        appid: 'wx3bfe2e11e43e4e06',
+        secret: 'e7ca8ab58b47f9bd81a750a92cd62620',
+        js_code: code,
+        grant_type: 'authorization_code'
       }
     })
+
+    const { openid } = res.data
 
     console.log(openid)
 
     // 2. 调后端 /customer/register
     const response = await registerWX({
-      openid: openid,                      // 后端用 code 换 openid
+      openid,
       userName: realName.value.trim()
     })
 
@@ -56,7 +59,7 @@ async function doRegister() {
     }
 
     // 3. 存 token 并关闭弹窗 → 去首页
-    uni.setStorageSync('TOKEN', token)
+    uni.setStorageSync('TOKEN', response.token)
     uni.hideLoading()
     uni.showToast({ title: '注册成功', icon: 'success' })
     emits('close')
