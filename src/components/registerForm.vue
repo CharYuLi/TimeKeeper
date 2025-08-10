@@ -12,7 +12,6 @@
 <script setup>
 import { ref } from 'vue'
 import { registerWX } from '../api/mine'
-import { open } from 'fs-extra'
 
 const realName = ref('')
 const emits = defineEmits('close')
