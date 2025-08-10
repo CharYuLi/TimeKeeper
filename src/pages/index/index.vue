@@ -134,22 +134,4 @@ function onTouchEnd(e) {
 .dot.active {
   background: #fff;
 }
-
-/* 悬浮按钮 */
-.floating-btn {
-  position: absolute;
-  bottom: 120rpx;
-  right: 40rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48rpx;
-  color: #667eea;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,.2);
-  z-index: 10;
-}
 </style>

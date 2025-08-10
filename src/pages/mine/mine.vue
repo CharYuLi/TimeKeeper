@@ -1,11 +1,14 @@
 <template>
   <view class="page">
     <!-- 顶部头像区 -->
-    <view class="header">
+    <view class="header" @tap="showRegister = true">
       <image class="avatar" src="../../static/1.jpg"></image>
       <view class="name">长期素食</view>
       <view class="role">{{ roleText }}</view>
     </view>
+
+    <!-- 注册弹窗（蒙层+表单） -->
+    <RegisterForm v-if="showRegister" @close="showRegister = false" />
 
     <!-- 功能菜单 -->
     <view class="content">
@@ -44,10 +47,12 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import RegisterForm from "../../components/registerForm.vue";
 // import { useUserStore } from "@/stores/user";
 
 // const userStore = useUserStore();
 
+const showRegister = ref(false);
 const avatar = ref("👦");
 const name = ref("小明同学");
 const roleText = computed(() => {
@@ -175,7 +180,7 @@ function handleLogout() {
 .logout {
   margin-top: 60rpx;
   padding: 0 40rpx;
-} 
+}
 
 .btn {
   width: 100%;
@@ -186,22 +191,4 @@ function handleLogout() {
   border-radius: 50rpx;
   font-size: 32rpx;
 }
-
-.floating-btn {
-  position: absolute;
-  bottom: 120rpx;
-  right: 40rpx;
-  width: 100rpx;
-  height: 100rpx;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48rpx;
-  color: #667eea;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
 </style>
