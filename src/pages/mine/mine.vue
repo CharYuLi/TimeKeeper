@@ -8,7 +8,7 @@
     </view>
 
     <!-- 注册弹窗（蒙层+表单） -->
-    <RegisterForm v-if="showRegister" @close="showRegister = false" />
+    <RegisterForm v-if="showRegister" @close="showRegister = false" @registered="onRegistered"/>
 
     <!-- 功能菜单 -->
     <view class="content">
@@ -63,16 +63,26 @@ function openPage(page) {
   uni.navigateTo({ url: `/pages/mine/${page}/index` });
 }
 
-
 // function handleClick(key) {
 //   uni.navigateTo({ url: `/pages/${key}/index` });
 // }
+
+function onRegistered(realName) {
+  name.value = realName          // 更新顶部显示
+  showRegister.value = false     // 关闭弹窗
+}
 
 function handleLogout() {
   uni.showModal({
     title: "提示",
     content: "确定要退出登录吗？",
-
+    success(res) {
+      if (res.confirm) {
+        uni.removeStorageSync('TOKEN') // 清除 JWT
+        name.value = '游客'            // 恢复默认名
+        uni.showToast({ title: '已退出', icon: 'none' })
+      }
+    }
   });
 }
 </script>

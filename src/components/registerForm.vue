@@ -64,6 +64,7 @@ async function doRegister() {
 
     // 3. 存 token 并关闭弹窗 → 去首页
     uni.setStorageSync('TOKEN', response.token)
+    emits('registered', realName.value.trim())
     uni.hideLoading()
     uni.showToast({ title: '注册成功', icon: 'success' })
     emits('close')
