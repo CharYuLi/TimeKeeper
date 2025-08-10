@@ -1,10 +1,10 @@
 <template>
   <!-- 半屏弹窗（蒙层） -->
-  <view class="mask" @tap.self="$emit('close')">
-    <view class="sheet">
+  <view class="mask" @tap="onMaskTap">
+    <view class="sheet" @tap.stop>
       <view class="title">注册</view>
-      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false" />
-      <button class="btn" @tap="doRegister">注册并开始</button>
+      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false" @tap.stop /> <button
+        class="btn" @tap="doRegister">注册并开始</button>
     </view>
   </view>
 </template>
@@ -15,6 +15,10 @@ import { registerWX } from '../api/mine'
 
 const realName = ref('')
 const emits = defineEmits('close')
+
+function onMaskTap() {
+  emits('close')
+}
 
 async function doRegister() {
   if (!realName.value.trim()) {
