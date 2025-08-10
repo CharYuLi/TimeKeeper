@@ -3,7 +3,7 @@
   <view class="mask" @tap.self="$emit('close')">
     <view class="sheet">
       <view class="title">注册</view>
-      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" />
+      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false"/>
       <button class="btn" @tap="doRegister">注册并开始</button>
     </view>
   </view>
@@ -77,16 +77,17 @@ async function doRegister() {
   bottom: 0;
   background: rgba(0, 0, 0, 0.45);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
 .sheet {
-  width: 100%;
+  width: 80%;
+  max-width: 600rpx;
   background: #fff;
-  border-radius: 24rpx 24rpx 0 0;
-  padding: 40rpx;
+  border-radius: 24rpx;
+  padding: 25px;
 }
 
 .title {
