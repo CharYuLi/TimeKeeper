@@ -6,10 +6,10 @@
       class="tab-item"
       @click="switchTab(item)"
     >
-      <image
+      <!-- <image
         class="tab-icon"
         :src="currentPath === item.pagePath ? item.selectedIconPath : item.iconPath"
-      />
+      /> -->
       <text :class="{ active: currentPath === item.pagePath }">{{ item.text }}</text>
     </view>
   </view>
@@ -18,12 +18,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const props = defineProps({
-  role: {
-    type: String,
-    required: true,
-  },
-})
+const loginRes = uni.getStorageSync('data') || {}
+const role = loginRes.role || 'student'
 
 const currentPath = ref(getCurrentPages()[0]?.route || '')
 
@@ -43,7 +39,7 @@ const roleTabListMap = {
   ],
 }
 
-const tabList = computed(() => roleTabListMap[props.role] || [])
+const tabList = computed(() => roleTabListMap[role] || [])
 
 function switchTab(item) {
   uni.switchTab({ url: `/${item.pagePath}` })

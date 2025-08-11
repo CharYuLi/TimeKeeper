@@ -68,6 +68,7 @@
     "selectedColor": "#667eea",
     "backgroundColor": "#fff",
     "borderStyle": "black",
+    "custom": true,
     "list": [
       {
         "pagePath": "pages/index/index",

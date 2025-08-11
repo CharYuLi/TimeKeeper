@@ -13,7 +13,8 @@
     </view>
 
     <view class="nav-tabs">
-      <view class="nav-tab" :class="{ active: activeTab === 'performance' }" @click="switchTab('performance')">今日表现</view>
+      <view class="nav-tab" :class="{ active: activeTab === 'performance' }" @click="switchTab('performance')">今日表现
+      </view>
       <view class="nav-tab" :class="{ active: activeTab === 'tasks' }" @click="switchTab('tasks')">作业任务</view>
       <view class="nav-tab" :class="{ active: activeTab === 'feedback' }" @click="switchTab('feedback')">教师反馈</view>
     </view>
@@ -130,6 +131,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+
+const role = uni.getStorageSync('data.role') || 'student'
 
 const activeTab = ref('performance')
 const showTaskModal = ref(false)
@@ -594,5 +597,4 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 </style>

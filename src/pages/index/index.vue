@@ -40,8 +40,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue'
 
+const role = uni.getStorageSync('data.role') || 'student'
 
 const bannerList = ref([
   { image: 'https://dummyimage.com/375x617/667eea/fff&text=积分活动1', title: '小活动', subtitle: '探索奇妙世界' },

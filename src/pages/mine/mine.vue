@@ -1,7 +1,6 @@
 <template>
   <view class="page">
     <!-- 页面内容 -->
-    <!-- <CustomTabBar :role="teacherRole" /> -->
     <!-- 顶部头像区 -->
     <view class="header">
       <image class="avatar" src="../../static/1.jpg" @tap="showRegister = true"></image>
