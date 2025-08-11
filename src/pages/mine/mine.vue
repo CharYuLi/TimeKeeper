@@ -1,5 +1,7 @@
 <template>
   <view class="page">
+    <!-- 页面内容 -->
+    <!-- <CustomTabBar :role="teacherRole" /> -->
     <!-- 顶部头像区 -->
     <view class="header">
       <image class="avatar" src="../../static/1.jpg" @tap="showRegister = true"></image>
@@ -7,7 +9,7 @@
         <view class="name">{{ name }}</view>
         <text class="account-btn" @tap="openAccountPicker">▼</text>
       </view>
-      <view class="role">{{ roleText }}</view>
+      <view class="role">{{ role }}</view>
     </view>
 
     <!-- 注册弹窗（蒙层+表单） -->
@@ -71,27 +73,27 @@ import RegisterForm from "../../components/registerForm.vue"
 
 const showRegister = ref(false)
 const name = ref("")
-const roleText = ref('')
+const role = ref('')
 
-const menuList = [
-  { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
-  { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
-  { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
-]
+// const menuList = [
+//   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
+//   { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
+//   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
+// ]
 
 const loadProfile = async () => {
   const token = uni.getStorageSync('TOKEN')
   if (!token) {
     name.value = '游客'
-    roleText.value = '点击头像登录'
+    role.value = '点击头像登录'
     return
   }
 
   try {
     const { success, data, message } = await me()
     if (success) {
-      name.value = data.name
-      roleText.value = '已认证'
+      name.value = realName
+      role.value = data.role
     } else {
       throw new Error(message)
     }
@@ -107,11 +109,13 @@ function openPage(page) {
   uni.navigateTo({ url: `/pages/mine/${page}/index` })
 }
 
-function onRegistered(realName) {
-  name.value = realName
-  roleText.value = '已认证'
+// 改这里会出问题
+function onRegistered({ realName, role }) {
+  name.value = "111"
+  role.value = role || '学生'
   showRegister.value = false
 }
+// console.log(name.value, role.value)
 
 function handleLogout() {
   uni.showModal({
@@ -121,7 +125,7 @@ function handleLogout() {
       if (res.confirm) {
         uni.removeStorageSync('TOKEN')
         name.value = '游客'
-        roleText.value = '请登录'
+        role.value = '请登录'
         uni.showToast({ title: '已退出', icon: 'none' })
       }
     }

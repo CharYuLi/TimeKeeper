@@ -21,13 +21,14 @@ function onMaskTap() {
 }
 
 async function doRegister() {
-  uni.removeStorageSync('jwt')
-  console.log('清除 JWT:', uni.getStorageSync('jwt'))
+  
   if (!realName.value.trim()) {
     uni.showToast({ title: '姓名不能为空', icon: 'none' })
     return
   }
 
+  uni.removeStorageSync('jwt')
+  console.log('清除 JWT:', uni.getStorageSync('jwt'))
   uni.showLoading({ title: '注册中...' })
 
   try {
@@ -47,7 +48,7 @@ async function doRegister() {
       }
     })
 
-    // 2. 调后端 /customer/register
+    // 2. 调后端
     const response = await registerWX({
       openid: res.data.openid,
       userName: realName.value.trim()
@@ -63,7 +64,11 @@ async function doRegister() {
     // 3. 存 token 并关闭弹窗 → 去首页
     uni.setStorageSync('jwt', response.data.token)
     console.log('存储 JWT:', uni.getStorageSync('jwt'))
-    emits('registered', realName.value.trim())
+    
+    emits('registered', {
+      realName: realName.value.trim(),
+      role: response.data.role
+    })
     uni.hideLoading()
     uni.showToast({ title: '注册成功', icon: 'success' })
     emits('close')
