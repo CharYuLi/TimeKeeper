@@ -1,5 +1,4 @@
-// utils/request.js   （原 axiosConfig.js 改名）
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.0.191:8080'
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.0.191:8848'
 
 const request = (options = {}) => {
   return new Promise((resolve, reject) => {
