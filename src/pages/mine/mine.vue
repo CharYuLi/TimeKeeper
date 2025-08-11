@@ -42,20 +42,21 @@
 
       <!-- 退出登录 -->
       <view class="logout">
-        <button class="btn" @tap="handleLogout">退出登录</button>
+        <button class="btn" hover-class="hover" @tap="handleLogout">退出登录</button>
       </view>
     </view>
   </view>
+
+  <!-- 账号选择弹窗 -->
   <view v-if="showAccountPicker" class="account-modal" @tap="closeAccountPicker">
     <view class="account-list" @tap.stop>
-      <view v-for="account in accountList" :key="account.id" class="account-item" @tap="switchAccount(account)">
+      <view v-for="account in accountList" class="account-item" @tap="switchAccount(account)">
         <image class="account-avatar" :src="account.avatar"></image>
         <view>
           <view class="account-name">{{ account.name }}</view>
-          <view class="account-id">{{ account.id }}</view>
         </view>
       </view>
-      <view class="account-item" @tap="registerNew">
+      <view class="account-item" @tap="showRegister = true">
         <view class="plus-icon">＋</view>
         <view class="account-name">添加新学生</view>
       </view>
@@ -82,7 +83,7 @@ const loadProfile = async () => {
   const token = uni.getStorageSync('TOKEN')
   if (!token) {
     name.value = '游客'
-    roleText.value = '请点击头像登录'
+    roleText.value = '点击头像登录'
     return
   }
 
@@ -140,10 +141,6 @@ function closeAccountPicker() { showAccountPicker.value = false }
 function switchAccount(account) {
   uni.setStorageSync('CURRENT_ACCOUNT', account.id)
   uni.showToast({ title: '已切换为 ' + account.name, icon: 'none' })
-  closeAccountPicker()
-}
-function registerNew() {
-  uni.navigateTo({ url: '/pages/register/index' })
   closeAccountPicker()
 }
 </script>
@@ -243,18 +240,32 @@ function registerNew() {
 }
 
 .logout {
-  margin-top: 60rpx;
-  padding: 0 40rpx;
+  position: fixed;
+  bottom: 175rpx;
+  left: 50%;
+  transform: translateX(-50%);   /* 居中 */
+  width: 100%;
+  padding: 0 40rpx;             /* 留出左右安全边距 */
+  box-sizing: border-box;
+  z-index: 10;
 }
 
 .btn {
   width: 100%;
-  padding: 30rpx 0;
+  height: 88rpx;
   background: #fff0f0;
   color: #f44336;
-  border: none;
+  border: 1rpx solid #f44336;
   border-radius: 50rpx;
   font-size: 32rpx;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn.hover:active {
+  opacity: 0.9;
 }
 
 /* 账号切换按钮 */
