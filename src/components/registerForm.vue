@@ -3,8 +3,8 @@
   <view class="mask" @tap="onMaskTap">
     <view class="sheet" @tap.stop>
       <view class="title">注册</view>
-      <input v-model="realName" placeholder="请输入学生真实姓名" class="input" :adjust-position="false" @tap.stop /> <button
-        class="btn" @tap="doRegister">注册并开始</button>
+      <input v-model="realName" placeholder="请输入学生姓名" class="input" :adjust-position="false" @tap.stop /> <button
+        class="btn" @tap="doRegister">开始</button>
     </view>
   </view>
 </template>
@@ -21,6 +21,8 @@ function onMaskTap() {
 }
 
 async function doRegister() {
+  uni.removeStorageSync('jwt')
+  console.log('清除 JWT:', uni.getStorageSync('jwt'))
   if (!realName.value.trim()) {
     uni.showToast({ title: '姓名不能为空', icon: 'none' })
     return
@@ -29,7 +31,6 @@ async function doRegister() {
   uni.showLoading({ title: '注册中...' })
 
   try {
-    // 1. 拿 code（不要用 wx.getOpenId，那是云函数写法）
     const code = await wx.login()
     if (!code) {
       throw new Error('获取登录状态失败，请重试')
@@ -40,19 +41,15 @@ async function doRegister() {
       method: 'GET',
       data: {
         appid: 'wx3bfe2e11e43e4e06',
-        secret: 'e7ca8ab58b47f9bd81a750a92cd62620',
-        js_code: code,
+        secret: '204fe0ca0850b8556f89b293106a0a9a',
+        js_code: code.code,
         grant_type: 'authorization_code'
       }
     })
 
-    const { openid } = res.data
-
-    console.log(openid)
-
     // 2. 调后端 /customer/register
     const response = await registerWX({
-      openid,
+      openid: res.data.openid,
       userName: realName.value.trim()
     })
 
@@ -62,13 +59,14 @@ async function doRegister() {
       console.log('注册成功')
     }
 
+
     // 3. 存 token 并关闭弹窗 → 去首页
-    uni.setStorageSync('TOKEN', response.token)
+    uni.setStorageSync('jwt', response.data.token)
+    console.log('存储 JWT:', uni.getStorageSync('jwt'))
     emits('registered', realName.value.trim())
     uni.hideLoading()
     uni.showToast({ title: '注册成功', icon: 'success' })
     emits('close')
-    uni.reLaunch({ url: '/pages/index/index' })
   } catch (e) {
     uni.hideLoading()
     uni.showToast({ title: e.message || '注册失败', icon: 'none' })

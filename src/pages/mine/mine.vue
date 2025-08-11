@@ -1,14 +1,17 @@
 <template>
   <view class="page">
     <!-- 顶部头像区 -->
-    <view class="header" @tap="showRegister = true">
-      <image class="avatar" src="../../static/1.jpg"></image>
-      <view class="name">长期素食</view>
+    <view class="header">
+      <image class="avatar" src="../../static/1.jpg" @tap="showRegister = true"></image>
+      <view class="name-row">
+        <view class="name">{{ name }}</view>
+        <text class="account-btn" @tap="openAccountPicker">▼</text>
+      </view>
       <view class="role">{{ roleText }}</view>
     </view>
 
     <!-- 注册弹窗（蒙层+表单） -->
-    <RegisterForm v-if="showRegister" @close="showRegister = false" @registered="onRegistered"/>
+    <RegisterForm v-if="showRegister" @close="showRegister = false" @registered="onRegistered" />
 
     <!-- 功能菜单 -->
     <view class="content">
@@ -43,33 +46,70 @@
       </view>
     </view>
   </view>
+  <view v-if="showAccountPicker" class="account-modal" @tap="closeAccountPicker">
+    <view class="account-list" @tap.stop>
+      <view v-for="account in accountList" :key="account.id" class="account-item" @tap="switchAccount(account)">
+        <image class="account-avatar" :src="account.avatar"></image>
+        <view>
+          <view class="account-name">{{ account.name }}</view>
+          <view class="account-id">{{ account.id }}</view>
+        </view>
+      </view>
+      <view class="account-item" @tap="registerNew">
+        <view class="plus-icon">＋</view>
+        <view class="account-name">添加新学生</view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import RegisterForm from "../../components/registerForm.vue";
+import { ref, onMounted } from "vue"
+import { me } from "../../api/mine.js"
+import RegisterForm from "../../components/registerForm.vue"
 
-const showRegister = ref(false);
-const avatar = ref("👦");
-const name = ref("小明同学");
+const showRegister = ref(false)
+const name = ref("")
+const roleText = ref('')
 
 const menuList = [
   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
   { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
-];
+]
 
-function openPage(page) {
-  uni.navigateTo({ url: `/pages/mine/${page}/index` });
+const loadProfile = async () => {
+  const token = uni.getStorageSync('TOKEN')
+  if (!token) {
+    name.value = '游客'
+    roleText.value = '请点击头像登录'
+    return
+  }
+
+  try {
+    const { success, data, message } = await me()
+    if (success) {
+      name.value = data.name
+      roleText.value = '已认证'
+    } else {
+      throw new Error(message)
+    }
+  } catch (e) {
+    name.value = '游客'
+  }
 }
 
-// function handleClick(key) {
-//   uni.navigateTo({ url: `/pages/${key}/index` });
-// }
+// 首次加载
+onMounted(loadProfile)
+
+function openPage(page) {
+  uni.navigateTo({ url: `/pages/mine/${page}/index` })
+}
 
 function onRegistered(realName) {
-  name.value = realName          // 更新顶部显示
-  showRegister.value = false     // 关闭弹窗
+  name.value = realName
+  roleText.value = '已认证'
+  showRegister.value = false
 }
 
 function handleLogout() {
@@ -78,12 +118,33 @@ function handleLogout() {
     content: "确定要退出登录吗？",
     success(res) {
       if (res.confirm) {
-        uni.removeStorageSync('TOKEN') // 清除 JWT
-        name.value = '游客'            // 恢复默认名
+        uni.removeStorageSync('TOKEN')
+        name.value = '游客'
+        roleText.value = '请登录'
         uni.showToast({ title: '已退出', icon: 'none' })
       }
     }
-  });
+  })
+}
+
+/* 账号列表示例 */
+const accountList = ref([
+  { name: 'Char YuLi', avatar: 'https://dummyimage.com/60/667eea/fff&text=CY' },
+  { name: 'Char_YuLi2', avatar: 'https://dummyimage.com/60/764ba2/fff&text=CY' }
+])
+const showAccountPicker = ref(false)
+
+/* 账号相关方法 */
+function openAccountPicker() { showAccountPicker.value = true }
+function closeAccountPicker() { showAccountPicker.value = false }
+function switchAccount(account) {
+  uni.setStorageSync('CURRENT_ACCOUNT', account.id)
+  uni.showToast({ title: '已切换为 ' + account.name, icon: 'none' })
+  closeAccountPicker()
+}
+function registerNew() {
+  uni.navigateTo({ url: '/pages/register/index' })
+  closeAccountPicker()
 }
 </script>
 
@@ -115,11 +176,18 @@ function handleLogout() {
   font-size: 60rpx;
 }
 
+.name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8rpx;
+}
+
 .name {
   font-size: 36rpx;
   font-weight: bold;
   color: white;
-  margin-bottom: 8rpx;
+  /* margin-bottom: 8rpx; */
 }
 
 .role {
@@ -187,5 +255,75 @@ function handleLogout() {
   border: none;
   border-radius: 50rpx;
   font-size: 32rpx;
+}
+
+/* 账号切换按钮 */
+.account-btn {
+  margin-left: 8rpx;
+  font-size: 28rpx;
+  color: #fff;
+}
+
+/* 账号弹窗 */
+.account-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.account-list {
+  width: 100%;
+  background: #fff;
+  border-top-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  padding-top: 25rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.account-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.account-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.account-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-id {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.plus-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #ececec;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #8f8f8f;
+  margin-right: 30rpx;
 }
 </style>
