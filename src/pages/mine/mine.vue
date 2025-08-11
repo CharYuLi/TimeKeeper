@@ -73,7 +73,7 @@ import RegisterForm from "../../components/registerForm.vue"
 
 const showRegister = ref(false)
 const name = ref("")
-const role = ref('')
+const role = ref("")
 
 // const menuList = [
 //   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
@@ -82,7 +82,7 @@ const role = ref('')
 // ]
 
 const loadProfile = async () => {
-  const token = uni.getStorageSync('TOKEN')
+  const token = uni.getStorageSync('jwt')
   if (!token) {
     name.value = '游客'
     role.value = '点击头像登录'
@@ -92,8 +92,8 @@ const loadProfile = async () => {
   try {
     const { success, data, message } = await me()
     if (success) {
-      name.value = realName
-      role.value = data.role
+      name.value = data.name
+      role.value = data.role ? (data.role === "student" ? "学生" : "教师") : "游客"
     } else {
       throw new Error(message)
     }
@@ -110,9 +110,8 @@ function openPage(page) {
 }
 
 // 改这里会出问题
-function onRegistered({ realName, role }) {
-  name.value = "111"
-  role.value = role || '学生'
+function onRegistered({ realName }) {
+  name.value = realName
   showRegister.value = false
 }
 // console.log(name.value, role.value)
