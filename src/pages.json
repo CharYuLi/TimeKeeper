@@ -5,27 +5,19 @@
       "style": { "navigationBarTitleText": "拾光计划" }
     },
     {
-      "path": "pages/points/points",
+      "path": "pages/points/index",
       "style": { "navigationBarTitleText": "积分系统" }
     },
     {
-      "path": "pages/points/pointsTeach",
-      "style": { "navigationBarTitleText": "教师积分系统" }
+      "path": "pages/logsPage/logs",
+      "style": { "navigationBarTitleText": "学生日志" }
     },
     {
-      "path": "pages/logsPage/logs",
+      "path": "pages/logsPage/index",
       "style": { "navigationBarTitleText": "日志系统" }
     },
     {
-      "path": "pages/logsPage/logsTeach",
-      "style": { "navigationBarTitleText": "教师日志系统" }
-    },
-    {
-      "path": "pages/management/management",
-      "style": { "navigationBarTitleText": "管理系统" }
-    },
-    {
-      "path": "pages/management/studentDetails",
+      "path": "pages/logsPage/studentDetails",
       "style": { "navigationBarTitleText": "学生详情" }
     },
     {
@@ -70,16 +62,12 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/points/points",
+        "pagePath": "pages/points/index",
         "text": "积分"
       },
       {
-        "pagePath": "pages/logsPage/logs",
+        "pagePath": "pages/logsPage/index",
         "text": "日志"
-      },
-      {
-        "pagePath": "pages/management/management",
-        "text": "管理"
       },
       {
         "pagePath": "pages/activities/activities",
