@@ -29,10 +29,6 @@
       "style": { "navigationBarTitleText": "学生详情" }
     },
     {
-      "path": "pages/photoUpload/photoUpload",
-      "style": { "navigationBarTitleText": "照片上传" }
-    },
-    {
       "path": "pages/activities/activities",
       "style": { "navigationBarTitleText": "活动报名" }
     },
@@ -68,7 +64,6 @@
     "selectedColor": "#667eea",
     "backgroundColor": "#fff",
     "borderStyle": "black",
-    "custom": true,
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -85,10 +80,6 @@
       {
         "pagePath": "pages/management/management",
         "text": "管理"
-      },
-      {
-        "pagePath": "pages/photoUpload/photoUpload",
-        "text": "照片"
       },
       {
         "pagePath": "pages/activities/activities",

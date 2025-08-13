@@ -10,23 +10,6 @@ export default {
     console.log('App Hide')
   },
 }
-
-// onLaunch(async () => {
-//   // 先尝试静默登录
-//   const { code } = await wx.login()
-//   const { token, isNew } = await post('/customer/silent', { code })
-
-//   uni.setStorageSync('TOKEN', token)
-
-//   if (isNew) {
-//     // 没注册过
-//     uni.reLaunch({ url: '/pages/register/index' })
-//   } else {
-//     // 已注册过
-//     uni.reLaunch({ url: '/pages/index/index' })
-//   }
-// })
-
 </script>
 
 <style>

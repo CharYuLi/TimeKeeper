@@ -74,12 +74,6 @@ const showRegister = ref(false)
 const name = ref("")
 const role = ref("")
 
-// const menuList = [
-//   { key: "profile", icon: "👤", title: "个人资料", desc: "查看和编辑个人信息" },
-//   { key: "notification", icon: "🔔", title: "消息通知", desc: "积分变动和系统通知" },
-//   { key: "help", icon: "💡", title: "帮助中心", desc: "常见问题和使用指南" },
-// ]
-
 const loadProfile = async () => {
   const token = uni.getStorageSync('jwt')
   if (!token) {
@@ -108,7 +102,6 @@ function openPage(page) {
   uni.navigateTo({ url: `/pages/mine/${page}/index` })
 }
 
-// 改这里会出问题
 function onRegistered({ realName }) {
   name.value = realName
   showRegister.value = false
