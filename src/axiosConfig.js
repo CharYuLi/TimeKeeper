@@ -1,5 +1,8 @@
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.0.191:8848'
 
+let isRedirectingToLogin = false  // 防止重复跳转登录页
+let failedQueue = []              // 存储待重试的请求
+
 const request = (options = {}) => {
   return new Promise((resolve, reject) => {
     // 默认配置
@@ -31,6 +34,8 @@ const request = (options = {}) => {
         if (statusCode === 200) {
           if (data.code === 100000) {
             resolve({ success: true, data: data.data })
+          } else if (data.code === 1000100) {
+            resolve({ success: false, message: '登录失效，请重新登录' })
           } else {
             resolve({ success: false, message: data.msg || '业务异常' })
           }

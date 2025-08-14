@@ -5,7 +5,7 @@
     <view class="header">
       <image class="avatar" src="../../static/1.jpg" @tap="showRegister = true"></image>
       <view class="name-row">
-        <view class="name">{{ name }}</view>
+        <view class="name">{{ realName }}</view>
         <text class="account-btn" @tap="openAccountPicker">▼</text>
       </view>
       <view class="role">{{ role }}</view>
@@ -68,16 +68,18 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { me } from "../../api/mine.js"
+import { useRoleStore } from '../../stores/role.js';
 import RegisterForm from "../../components/registerForm.vue"
 
 const showRegister = ref(false)
-const name = ref("")
+const realName = ref("")
 const role = ref("")
+const { setRole } = useRoleStore()
 
 const loadProfile = async () => {
   const token = uni.getStorageSync('jwt')
   if (!token) {
-    name.value = '游客'
+    realName.value = '游客'
     role.value = '点击头像登录'
     return
   }
@@ -85,13 +87,14 @@ const loadProfile = async () => {
   try {
     const { success, data, message } = await me()
     if (success) {
-      name.value = data.name
+      realName.value = data.name
       role.value = data.role ? (data.role === "student" ? "学生" : "教师") : "游客"
+      uni.setStorageSync('role', data.role)
     } else {
       throw new Error(message)
     }
   } catch (e) {
-    name.value = '游客'
+    realName.value = '游客'
   }
 }
 
@@ -102,9 +105,11 @@ function openPage(page) {
   uni.navigateTo({ url: `/pages/mine/${page}/index` })
 }
 
-function onRegistered({ realName }) {
-  name.value = realName
+function onRegistered({ realName: newRealName, role: newRole }) {
+  realName.value = newRealName
+  role.value = newRole
   showRegister.value = false
+  uni.setStorageSync('role', newRole)
 }
 // console.log(name.value, role.value)
 
@@ -114,8 +119,8 @@ function handleLogout() {
     content: "确定要退出登录吗？",
     success(res) {
       if (res.confirm) {
-        uni.removeStorageSync('TOKEN')
-        name.value = '游客'
+        uni.removeStorageSync('jwt')
+        realName.value = '游客'
         role.value = '请登录'
         uni.showToast({ title: '已退出', icon: 'none' })
       }

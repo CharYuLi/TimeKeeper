@@ -185,21 +185,7 @@ function saveLog() {
   closeModal('addLog')
 }
 
-function handleClickOutside(event) {
-  if (event.target.classList.contains('modal')) {
-    if (showTaskModal.value) closeModal('task')
-    if (showReplyModal.value) closeModal('reply')
-    if (showAddLogModal.value) closeModal('addLog')
-  }
-}
 
-onMounted(() => {
-  window.addEventListener('click', handleClickOutside)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('click', handleClickOutside)
-})
 </script>
 
 <style>

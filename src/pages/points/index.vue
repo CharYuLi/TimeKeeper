@@ -190,32 +190,16 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-const role = ref('')
+import { useRoleStore } from '../../stores/role'
+const { role } = useRoleStore()
 
 onMounted(async () => {
-  // 真实环境：await uni.request({ url:'/api/me' })
-  // 这里直接读 storage 方便演示
-  role.value = uni.getStorageSync('data.role') || 'student'
-
-  // try {
-  //   // 1. 尝试从存储获取角色
-  //   const storedRole = uni.getStorageSync('role')
-
-  //   // 2. 如果存储中没有，设置默认值
-  //   if (!storedRole) {
-  //     // 在实际应用中应该跳转到登录页
-  //     console.warn('未找到用户角色，使用默认教师角色')
-  //     role.value = 'student'
-  //     uni.setStorageSync('role', 'student') // 保存到存储
-  //   } else {
-  //     role.value = storedRole
-  //   }
-  // } catch (e) {
-  //   console.error('获取角色失败:', e)
-  //   role.value = 'student' // 失败时使用默认值
-  // } finally {
-  //   loading.value = false // 结束加载状态
-  // }
+  try {
+    role.value = uni.getStorageSync('data.role') || 'student'
+  } catch (e) {
+    console.error('读取角色信息失败', e)
+    role.value = ''
+  }
 })
 
 /* === points 逻辑 === */

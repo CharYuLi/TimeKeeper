@@ -9,10 +9,6 @@
       "style": { "navigationBarTitleText": "积分系统" }
     },
     {
-      "path": "pages/logsPage/logs",
-      "style": { "navigationBarTitleText": "学生日志" }
-    },
-    {
       "path": "pages/logsPage/index",
       "style": { "navigationBarTitleText": "日志系统" }
     },
