@@ -26,7 +26,6 @@
 <script setup>
 import { ref, computed } from 'vue';
 
-const activeTab = ref('students');
 const studentIdx = ref(0);
 
 const studentList = [
